@@ -8,7 +8,7 @@
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default
-  
+
    dotspacemacs-distribution 'spacemacs
    dotspacemacs-elpa-https nil
 
@@ -21,8 +21,9 @@ values."
      ;; better-defaults
      emacs-lisp
      clojure
-     fasd
-     osx
+     ;;fasd
+     git
+;;     osx
      dev
 
      )
@@ -45,6 +46,13 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
+
+
+
+
+
+
+
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
@@ -69,16 +77,16 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-default-theme 'monokai
-   dotspacemacs-themes '(leuven
-                         monokai
-                         zenburn)
+   dotspacemacs-default-theme 'base16-ocean-dark
+   dotspacemacs-themes '(monokai
+                         base16-ocean-dark
+                         )
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
-   dotspacemacs-default-font '("DejaVu Sans Mono"
-                               :size 13
+   dotspacemacs-default-font '("Anonymous pro"
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -184,12 +192,17 @@ values."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
- (fill-keymap evil-normal-state-local-map
-  "M-." 'cider-jump-to-var
-  "M-," 'cider-jump-back
-  "C-c h" 'helm-clojure-headlines
-  "C-c C-d g" 'cider-grimoire-web
-  "C-c C-d j" 'cider-docview-javadoc)
+
+ ;; (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+  (when (display-graphic-p)
+    (progn
+      (disable-theme 'leuven)
+      (load-theme 'base16-ocean-dark t)
+      (enable-theme 'base16-ocean-dark)
+
+      ))
 
 )
 
@@ -203,6 +216,8 @@ layers configuration. You are free to put any user code."
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["black" "red3" "ForestGreen" "yellow3" "blue" "magenta3" "DeepSkyBlue" "gray50"])
  '(cider-cljs-lein-repl
    "(do (require 'figwheel-sidecar.repl-api) (figwheel-sidecar.repl-api/start-figwheel!) (figwheel-sidecar.repl-api/cljs-repl))")
  '(compilation-message-face (quote default))
@@ -241,6 +256,9 @@ layers configuration. You are free to put any user code."
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(package-selected-packages
+   (quote
+    (smeargle orgit magit-gitflow helm-gitignore request gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger evil-magit magit magit-popup git-commit with-editor monokai-theme sublime-themes reveal-in-osx-finder pbcopy osx-trash launchctl fasd grizzl evil-cleverparens clj-refactor inflections edn multiple-cursors paredit yasnippet peg cider-eval-sexp-fu cider queue clojure-mode base16-theme ws-butler window-numbering which-key volatile-highlights vi-tilde-fringe use-package spacemacs-theme spaceline smooth-scrolling restart-emacs rainbow-delimiters quelpa popwin persp-mode pcre2el paradox page-break-lines open-junk-file neotree move-text macrostep lorem-ipsum linum-relative leuven-theme info+ indent-guide ido-vertical-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery expand-region exec-path-from-shell evil-visualstar evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-args evil-anzu eval-sexp-fu elisp-slime-nav define-word clean-aindent-mode buffer-move bracketed-paste auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))

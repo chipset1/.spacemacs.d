@@ -12,10 +12,10 @@
 ;;; Commentary:
 ; e
 ; You appear to be setting environment variables ("PATH") in your .bashrc or .zshrc: those files are only
-;  read by interactive shells, 
-;  so you should instead set environment variables in startup files like 
-;  .profile, .bash_profile or .zshenv.  
-;  Refer to your shell's man page for more info.  
+;  read by interactive shells,
+;  so you should instead set environment variables in startup files like
+;  .profile, .bash_profile or .zshenv.
+;  Refer to your shell's man page for more info.
 ;  Customize `exec-path-from-shell-arguments' to remove "-i"
 ;   when done, or disable `exec-path-from-shell-check-startup-files' t
 ;   o disable this message.
@@ -40,19 +40,24 @@
 ;;; Code:
 
 
+
+
+
+
 (setq dev-packages
   '(evil-cleverparens
     base16-theme
-    sublime-themes
+   ;; sublime-themes
     )
 
 )
 
-(defun dev/init-paxedit ())
-(defun dev/init-evil-cleverparens ()
-	(use-package evil-cleverparens :defer 
-		          t))
+
 (defun dev/init-base16-theme ())
-(defun dev/init-sublime-themes ())
+(defun dev/init-evil-cleverparens ()
+	(use-package evil-cleverparens
+    :defer t
+    :init (progn (add-hook 'clojure-mode-hook 'evil-cleverparens-mode))
+))
 
 ;;; packages.el ends here
