@@ -55,9 +55,6 @@
 
 (defun dev/init-base16-theme ())
 (defun dev/init-evil-cleverparens ()
-	(use-package evil-cleverparens
-    :defer t
-    :init (progn (add-hook 'clojure-mode-hook 'evil-cleverparens-mode))
-))
+	)
 
 ;;; packages.el ends here

@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -23,7 +23,7 @@ values."
      clojure
      ;;fasd
      git
-;;     osx
+     ;;     osx
      dev
 
      )
@@ -31,7 +31,7 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages then consider to create a layer, you can also put the
    ;; configuration in `dotspacemacs/config'.
-   dotspacemacs-additional-packages '(paraedit)
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -196,6 +196,9 @@ layers configuration. You are free to put any user code."
  ;; (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+  (spacemacs/toggle-evil-cleverparens-on)
+  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
+
   (when (display-graphic-p)
     (progn
       (disable-theme 'leuven)
@@ -203,9 +206,7 @@ layers configuration. You are free to put any user code."
       (enable-theme 'base16-ocean-dark)
 
       ))
-
 )
-
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
