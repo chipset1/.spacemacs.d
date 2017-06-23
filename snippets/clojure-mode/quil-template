@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: quil-template
+# key: temp
+# --
+(ns quil-sketches.caves
+  (:require [quil.core :as q]
+            [quil-sketches.util.core :as u]
+            [quil.middleware :as m]))
+
+(def sketch-width $2)
+(def sketch-height $1)
+
+(defn draw []
+  (q/background 120)
+  $0)
+
+(q/defsketch quil-sketches
+  :size [sketch-width sketch-height]
+  :draw draw
+  :features [:keep-on-top]
+  :middleware [m/fun-mode
+               m/pause-on-error])

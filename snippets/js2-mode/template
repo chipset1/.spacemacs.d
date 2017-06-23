@@ -1,0 +1,21 @@
+# -*- mode: snippet -*-
+# name: template
+# key: template
+# --
+var debugText = textStackFn(20, 40, 20);
+
+function setup(){
+    createCanvas(1248, 720);
+}
+
+function draw(){
+    background(0);
+    debugText("frameRate", int(frameRate()));
+    $0
+}
+
+function keyPressed(){
+    if(key.toLowerCase() === "r") {
+        window.location.reload(true);
+    }
+}

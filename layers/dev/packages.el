@@ -40,21 +40,46 @@
 ;;; Code:
 
 
-
-
-
-
 (setq dev-packages
-  '(evil-cleverparens
-    base16-theme
+  '(
    ;; sublime-themes
     )
 
 )
 
-
-(defun dev/init-base16-theme ())
-(defun dev/init-evil-cleverparens ()
-	)
+(defun dev/pre-init-evil-cleverparens ()
+  (message "this ran1")
+  )
 
 ;;; packages.el ends here
+
+;; search will center on the line it's found in.
+;; (define-key evil-normal-state-map (kbd "n") (lambda()
+;;                                               (interactive)
+;;                                               (evil-ex-search-next)
+;;                                               (evil-scroll-line-to-center (line-number-at-pos))))
+
+;; (defun spacemacs//open-in-external-app (file-path)
+;;   "Open `file-path' in external application."
+;;   (cond
+;;    ((spacemacs/system-is-mswindows) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
+;;    ((spacemacs/system-is-mac) (shell-command (format "open \"%s\"" file-path)))
+;;    ((spacemacs/system-is-linux) (let ((process-connection-type nil))
+;;                                   (start-process "" nil "xdg-open" file-path)))))
+;; (open-in-explorer)
+
+;; exec-path
+
+;; (defun spacemacs/open-file-or-directory-in-external-app (arg)
+;;   "Open current file in external application.
+;; If the universal prefix argument is used then open the folder
+;; containing the current file by the default explorer."
+;;   (interactive "P")
+;;   (if arg
+;;       (spacemacs//open-in-external-app (expand-file-name default-directory))
+;;     (let ((file-path (if (derived-mode-p 'dired-mode)
+;;                          (dired-get-file-for-visit)
+;;                        buffer-file-name)))
+;;       (if file-path
+;;           (spacemacs//open-in-external-app file-path)
+;;         (message "No file associated to this buffer.")))))

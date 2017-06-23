@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: template
+# key: template
+# --
+void setup(){
+    size(512, 512);
+}
+
+void draw(){
+ $0
+}
