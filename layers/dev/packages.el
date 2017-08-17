@@ -1,25 +1,15 @@
-;;; packages.el --- dev layer packages file for Spacemacs.
-;;
-;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
-;;
-;; Author: stephenaemblem <stephenemblem@stephens-MacBook-Pro.local>
-;; URL: https://github.com/syl20bnr/spacemacs
-;;
-;; This file is not part of GNU Emacs.
-;;
-;;; License: GPLv3
 
 ;;; Commentary:
-; e
-; You appear to be setting environment variables ("PATH") in your .bashrc or .zshrc: those files are only
-;  read by interactive shells,
-;  so you should instead set environment variables in startup files like
-;  .profile, .bash_profile or .zshenv.
-;  Refer to your shell's man page for more info.
-;  Customize `exec-path-from-shell-arguments' to remove "-i"
-;   when done, or disable `exec-path-from-shell-check-startup-files' t
-;   o disable this message.
-; Done.
+                                        ; e
+                                        ; You appear to be setting environment variables ("PATH") in your .bashrc or .zshrc: those files are only
+                                        ;  read by interactive shells,
+                                        ;  so you should instead set environment variables in startup files like
+                                        ;  .profile, .bash_profile or .zshenv.
+                                        ;  Refer to your shell's man page for more info.
+                                        ;  Customize `exec-path-from-shell-arguments' to remove "-i"
+                                        ;   when done, or disable `exec-path-from-shell-check-startup-files' t
+                                        ;   o disable this message.
+                                        ; Done.
 
 ;; See the Spacemacs documentation and FAQs for instructions on how to implement
 ;; a new layer:
@@ -41,45 +31,41 @@
 
 
 (setq dev-packages
-  '(
-   ;; sublime-themes
-    )
+      '(
+        ;; sublime-themes
+        ;; evil-easymotion
+        processing-mode
+        )
 
-)
+      )
 
-(defun dev/pre-init-evil-cleverparens ()
-  (message "this ran1")
+(defun dev/post-init-helm-swoop ()
+  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
+  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
   )
 
-;;; packages.el ends here
+(defun dev/init-processing-mode ()
+  (use-package processing-mode
+    :config
+    (progn
+      (setq-default processing-location "~/processing-3.0b6/processing-java.exe"
+                    processing-application-dir "~/processing-3.0b6"
+                    processing-sketchbook-dir "~/src/processing")
 
-;; search will center on the line it's found in.
-;; (define-key evil-normal-state-map (kbd "n") (lambda()
-;;                                               (interactive)
-;;                                               (evil-ex-search-next)
-;;                                               (evil-scroll-line-to-center (line-number-at-pos))))
+      (add-to-list 'load-path "~/processing-3.0b6")
+      (autoload 'processing-mode "processing-mode" "Processing mode" t)
+      (add-to-list 'auto-mode-alist '("\\.pde$" . processing-mode)))))
 
-;; (defun spacemacs//open-in-external-app (file-path)
-;;   "Open `file-path' in external application."
-;;   (cond
-;;    ((spacemacs/system-is-mswindows) (w32-shell-execute "open" (replace-regexp-in-string "/" "\\\\" file-path)))
-;;    ((spacemacs/system-is-mac) (shell-command (format "open \"%s\"" file-path)))
-;;    ((spacemacs/system-is-linux) (let ((process-connection-type nil))
-;;                                   (start-process "" nil "xdg-open" file-path)))))
-;; (open-in-explorer)
-
-;; exec-path
-
-;; (defun spacemacs/open-file-or-directory-in-external-app (arg)
-;;   "Open current file in external application.
-;; If the universal prefix argument is used then open the folder
-;; containing the current file by the default explorer."
-;;   (interactive "P")
-;;   (if arg
-;;       (spacemacs//open-in-external-app (expand-file-name default-directory))
-;;     (let ((file-path (if (derived-mode-p 'dired-mode)
-;;                          (dired-get-file-for-visit)
-;;                        buffer-file-name)))
-;;       (if file-path
-;;           (spacemacs//open-in-external-app file-path)
-;;         (message "No file associated to this buffer.")))))
+(defun dev/post-init-org-mode ()
+  (spacemacs/set-leader-keys-for-major-mode 'org-mode
+    "ot" (lambda ()
+           (interactive)
+           (insert "*** ")
+           (evil-insert-state))
+    "os" 'org-timer-start
+    "oi" (lambda ()
+           (interactive)
+           (end-of-line)
+           (insert " - ")
+           (org-timer))
+    "op" 'org-timer-pause-or-continue))
