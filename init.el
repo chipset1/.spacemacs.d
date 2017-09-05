@@ -15,20 +15,18 @@ values."
                       auto-completion-tab-key-behavior 'complete
                       auto-completion-enable-snippets-in-popup t)
      org
-     shell
+     (shell :variables shell-default-shell 'eshell)
      emacs-lisp
      ;;deft
      racket
      python
      javascript
-     evil-cleverparens
      (clojure :variables
               clojure-enable-fancify-symbols t)
 
      markdown
      html
      git
-     evil-snipe
      ;;powershell
      ;; vinegar
      ibuffer
@@ -37,16 +35,13 @@ values."
      dev
      online-thesaurus)
    dotspacemacs-additional-packages '(base16-theme
-                                      evil-easymotion
-                                      general
-                                      ;; evil-easy-motion
                                       ;; atom-dark-theme
-                                      skeletor
                                       sublime-themes
                                       ;; elmacro
-                                      keyfreq
                                       annoying-arrows-mode
-                                      processing-mode)
+                                      xref-js2
+                                      ;; processing-mode
+                                      )
    dotspacemacs-excluded-packages '()
    ;; dotspacemacs-configuration-layers dev--layers
    dotspacemacs-delete-orphan-packages t))
@@ -108,8 +103,6 @@ values."
 (defun dotspacemacs/user-init ()
   (desktop-save-mode 1)
 
-  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
-  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
 
@@ -124,13 +117,6 @@ values."
           (action . (lambda (candidate)
                       (message "%s" candidate)
                       (processing-find-sketch candidate)))))
-  ;; (set-face-attribute 'default nil :height 140)
-  ;; (define-abbrev-table 'js2-mode-abbrev-table)
-  ;; (define-abbrev global-abbrev-table
-  ;;   "mx" "mouseX"
-  ;;   "my" "mouseY"
-  ;;   )
-
   ;; blue
   ;; (set-face-background 'spacemacs-normal-face "#8fa1b3")
   ;; (setq evil-normal-state-cursor "#8fa1b3")
@@ -140,45 +126,67 @@ values."
   ;; (setq evil-normal-state-cursor "#bf616a")
 
   ;; white / grey
-  ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
+  (set-face-background 'spacemacs-normal-face "#c0c5ce")
+
+  ;; (setq ranger-width-parents 0.2)
+  ;; (setq ranger-cleanup-eagerly t)
+
+  (helm-autoresize-mode 1)
+  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+        ;; helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+        ;; helm-ff-file-name-history-use-recentf t
+        helm-echo-input-in-header-line t)
+
+  (setq-default magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
+                js2-basic-offset 2
+
+                dumb-jump-prefer-searcher 'ag
+                helm-ag-ignore-buffer-patterns '("/lib/" ".log")
+                ivy-height 20
+
+                mode-line-format 'spaceline-all-the-icons
+
+                spaceline-all-the-icons-icon-set-modified 'toggle
+                spaceline-all-the-icons-separator-type 'none
+
+                ;; to stop ag crashing emacs
+                helm-input-idle-delay 0.1
+                helm-cycle-resume-delay 2
+                helm-follow-input-idle-delay 1
+
+                helm-semantic-fuzzy-match t
+                helm-buffers-fuzzy-matching t
+                helm-recentf-fuzzy-match    t
+                helm-imenu-fuzzy-match t
+                helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
 
 
-  (setq-default
-   magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
-   js2-basic-offset 2
-   helm-ag-ignore-buffer-patterns '("/lib/" ".log")
-   require-final-newline nil
-   mode-require-final-newline nil
-   default-buffer-file-coding-system 'utf-8-unix
-   ;; evil-normal-state-cursor "#c0c5ce"
-   evil-search-module 'evil-search
-   ranger-preview-file t
-   ranger-width-preview 0.7
-   scroll-margin 5
-   org-bullets-bullet-list '("■" "◆" "▲" "▶")
-   neo-theme 'nerd
+                powerline-default-separator nil
 
-   ;; processing-location "~/processing-3.0b6/processing-java.exe"
-   ;; processing-application-dir "~/processing-3.0b6"
-   ;; processing-sketchbook-dir "~/src/processing"
+                require-final-newline nil
+                mode-require-final-newline nil
+                default-buffer-file-coding-system 'utf-8-unix
+                ;; evil-normal-state-cursor "#c0c5ce"
+                evil-search-module 'evil-search
 
-   projectile-indexing-method 'alien ;; speed up indexing on windows
-   yas-snippet-dirs '("~/.spacemacs.d/snippets")
-   dired-listing-switches "-Al --si --time-style long-iso -t"
+                scroll-margin 5
+                org-bullets-bullet-list '("■" "◆" "▲" "▶")
+                neo-theme 'nerd
 
-   skeletor-project-directory "~/src/js"
-   skeletor-user-directory "~/.spacemacs.d/skeleton-projects")
-
-
-  ;; (skeletor-define-template "p5js"
-  ;;   :no-license? t
-  ;;   :no-git? t)
+                projectile-indexing-method 'alien ;; speed up indexing on windows
+                yas-snippet-dirs '("~/.spacemacs.d/snippets")
+                dired-listing-switches "-Al --si --time-style long-iso -t"
+                )
 
   (add-to-list 'exec-path "C:/Users/stephen/.babun/cygwin/bin")
   (add-to-list 'exec-path "/usr/bin")
   (add-to-list 'projectile-project-root-files "index.html")
   (add-to-list 'projectile-project-root-files ".pde")
 
+  (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
+  (setq coding-system-for-write 'utf-8 )
   (defalias 'ag 'ag.exe)
   (defalias 'ff 'find-file-other-window)
   )
@@ -197,101 +205,21 @@ values."
 (defun dotspacemacs/user-config ()
   " layers configuration. You are free to put any user code."
   (setq ranger-width-preview 0.9)
+  (golden-ratio-mode t)
 
+  (helm-autoresize-mode t)
 
-  ;; (add-hook 'org-mode-hook (lambda ()
-  ;;                            (interactive)
-  ;;                            (hi-lock-mode)
-  ;;                            (highlight-regexp "problem" 'hi-blue)))
-  ;; (global-annoying-arrows-mode)
-  ;; (setq org-todo-keyword-faces
-  ;;       '(("problem" . (:foreground "#8fa1b3" :weight bold))))
-  (evil-snipe-mode)
-  ;; (helm-swoop)
+  (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
-  (spacemacs/toggle-evil-cleverparens-on)
-  (setq-default powerline-default-separator nil)
-
-  (setq keyfreq-excluded-commands
-        '(self-insert-command
-          evil-insert
-          org-self-insert-command
-          abort-recursive-edit
-          exit-minibuffer
-          company-ignore
-          evil-next-line
-          evil-previous-line
-          evil-normal-state
-          evil-forward-char
-          evil-backward-char))
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1)
+  ;; (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
 
 
-  ;; TODO: figure out why this isn't working and why i can't bind anything to
-  ;; s
-  ;; (define-key evil-normal-state-map "S" nil)
-  ;; (define-key evil-normal-state-map (kbd "F") 'evilem--motion-evil-find-char-backward)
 
-  ;; (define-key helm-swoop-edit-map (kbd "C-c C-c"))
-
-  (evilem-default-keybindings "gh")
-  (evilem-define (kbd "ghf") #'evil-repeat-find-char
-                 :name 'evilem--motion-evil-find-char-forward-line
-                 :scope 'line
-                 :pre-hook (save-excursion
-                             ;; (setq evil-this-type 'inclusive)
-                             (setq evil-this-type 'exclusive)
-                             (call-interactively #'evil-find-char)))
-
-  (evilem-define (kbd "ghF") #'evil-repeat-find-char
-                 :name 'evilem--motion-evil-find-char-backward-line
-                 :scope 'line
-                 :pre-hook (save-excursion
-                             (setq evil-this-type 'exclusive)
-                             (call-interactively #'evil-find-char-backward)))
-
-  ;; alt p paste in insert mode
-  (define-key evil-normal-state-map "f" 'evilem--motion-evil-find-char-forward-line)
-  (define-key evil-motion-state-map "f" 'evilem--motion-evil-find-char-forward-line)
-  ;; (define-key evil-normal-state-map "gj" 'evilem--motion-evil-find-char-forward-line)
-  (define-key evil-normal-state-map "F" 'evilem--motion-evil-find-char-backward-line)
-  (define-key evil-motion-state-map "F" 'evilem--motion-evil-find-char-backward-line)
-
-  (define-key evil-normal-state-map "s" 'evil-avy-goto-char-2)
-  (define-key evil-normal-state-map "gj" 'spacemacs/helm-jump-in-buffer)
-
-  ;; (evilem-define (kbd "F") 'evil-avy-goto-char-2)
-
-  ;; (evilem-define (kbd "gs") 'evil-snipe-repeat
-  ;;                :pre-hook (save-excursion (call-interactively #'evil-snipe-s))
-  ;;                :bind ((evil-snipe-scope 'buffer)
-  ;;                       (evil-snipe-enable-highlight)
-  ;;                       (evil-snipe-enable-incremental-highlight)))
-  ;; (define-key evil-snipe-parent-transient-map (kbd "C-;")
-  ;;   (evilem-create 'evil-snipe-repeat
-  ;;                  :bind ((evil-snipe-scope 'buffer)
-  ;;                         (evil-snipe-enable-highlight)
-  ;;                         (evil-snipe-enable-incremental-highlight))))
-
-
+  (setq-default  powerline-default-separator nil)
   (global-set-key (kbd "M-`") (lambda ()
                                 (interactive)
                                 (find-file "~/src/notes/weekly-goals.org")))
 
-
-  ;; (spacemacs/set-leader-keys (kbd "M-1") (lambda ()
-  ;;                                          (interactive)
-  ;;                                          (quick-shift/ff-at-project "game3" "tasks.org")))
-  ;; (spacemacs/set-leader-keys (kbd "M-2") (lambda ()
-  ;;                                          (interactive)
-  ;;                                          (quick-shift/ff-at-project "game3" "game.js")))
-  ;; (spacemacs/set-leader-keys (kbd "M-3") (lambda ()
-  ;;                                          (interactive)
-  ;;                                          (quick-shift/ff-at-project "game3" "index.html")))
-
-
-  ;; (global-auto-revert-mode t) ;; auto refresh file changed
   (define-key helm-map (kbd "C-1") (lambda ()
                                      (interactive)
                                      ;; action 0 is switch to buffer
@@ -314,73 +242,32 @@ values."
                                      (helm-next-line 4)
                                      (helm-select-nth-action 0)))
 
-  (spacemacs/set-leader-keys
-    ;; TODO: comment and unccoment functions
-    ;; TODO: visual select blocks
-    ;; sp-forward-slurp-sexp doesn't work with '/' or '.' in text
-    ;; which doesn't work well in non-lisp languages
-    ;; "ks" 'paredit-forward-slurp-sexp TODO: this is slow figure out why
-
-    "1" (lambda ()
-          (interactive)
-          (quick-shift/ff-at-project "game4" "prototype1.js"))
-    "2" (lambda ()
-          (interactive)
-          (quick-shift/ff-at-project "game4" "tasks.org"))
-    "3" (lambda ()
-          (interactive)
-          (quick-shift/ff-at-project "game4" "webpack.config.js"))
-
-    "5" 'query-replace
-    "z-" 'spacemacs/decrease-transparency
-    "z=" 'spacemacs/increase-transparency
-    "gc" 'magit-checkout
-    "ot" 'thesaurus
-    "bk" 'kill-this-buffer
-    "ov" (lambda ()
-           (interactive)
-           (let ((start-point (point)))
-             (evil-find-char 1 (string-to-char "("))
-             (forward-char)
-             (sp-up-sexp)
-             (evil-visual-select start-point (+ 1 (point)))))
-
-    "or" (lambda ()
-           (interactive)
-           (cond ((eq 'processing-mode major-mode)
-                  (progn
-                    (evil-write nil nil nil (buffer-file-name) t)
-                    (processing-sketch-run)))
-                 ((eq 'c++-mode major-mode)
-                  (progn
-                    (evil-write nil nil nil (buffer-file-name) t)
-                    (compile "make")))))
-    "of" 'dev/goto-p5reference
-    "od" 'dev/goto-processing-reference
-    "oo" 'clojure-comment-uncomment
-    "op" 'helm-processing-find-sketch
-    ;; "ou" 'comment-map
-    ;; "of" 'comment-defn
-    ;; "obf" 'comment-before-defn
-    "ol" 'comment-line
-    ;; "oe" 'cider-pprint-eval-defun-at-point
-    )
-
-  (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
-    "ep" 'cider-pprint-eval-defun-at-point)
-
-
-  (add-hook 'clojure-mode-hook #'evil-cleverparens-mode)
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 
+
+  ;; (define-key js2-mode-map (kbd "M-.") nil)
+  ;; imenu-sort-function
+  ;; imenu-sort-functioimenu-sort-functionn
+
+
+  (advice-add 'previous-buffer :after #'dev/switch-to-buffer-continue)
+  (advice-add 'next-buffer :after #'dev/switch-to-buffer-continue)
+
+  (advice-add 'last-buffer :after #'dev/switch-to-buffer-continue)
+
+  (add-hook 'js2-mode-hook (lambda ()
+                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+
+  (add-hook 'js2-mode-hook #'lispyville-mode)
+  (add-hook 'clojure-mode-hook #'lispyville-mode)
+  (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
+
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-  (add-hook 'emacs-lisp-mode-hook #'evil-cleverparens-mode)
 
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-
-  (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+  ;; (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
   (add-hook 'js2-mode-hook (lambda ()
                              (interactive)
                              (add-hook 'evil-insert-state-exit-hook
@@ -393,7 +280,9 @@ values."
 
   (evil-add-command-properties #'jump-to-definition :jump t)
   (evil-add-command-properties #'goto-last-change :jump t)
+  ;; (helm-semantic)
 
+  (advice-add #'evil-jump-backward :after #'scroll-to-center-advice)
   (advice-add #'evil-ex-search-previous :after #'scroll-to-center-advice)
   (advice-add #'evil-ex-search-next :after #'scroll-to-center-advice)
   (advice-add #'spacemacs/jump-to-definition :after #'scroll-to-center-advice)
@@ -453,35 +342,13 @@ values."
 
   ;; (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
   ;; (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
-  (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
+  ;; (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
 
   ;; doesn't work
   ;; (define-key evil-insert-state-map (kbd "TAB") 'yas-expand)
 
   (evilified-state-evilify skewer-error-mode skewer-error-mode-map
     (kbd "q") 'quit-window)
-
-  (spacemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
-    "es" 'spacemacs/eval-current-form-sp
-    "ec" 'spacemacs/eval-current-symbol-sp)
-  (spacemacs/set-leader-keys-for-major-mode 'js2-mode
-    "ee" 'skewer-eval-last-expression
-    "eb" 'skewer-load-buffer
-    "el" (lambda ()
-           (interactive)
-           (skewer-eval (thing-at-point 'line t)))
-    "ef" 'skewer-eval-defun)
-
-  (evil-define-key 'normal evil-cleverparens-mode-map
-    "{" 'evil-cp-beginning-of-defun
-    "}" 'evil-cp-end-of-defun
-    "[" nil                            ; [ and ] aren't used so unimpaired works
-    "]" nil)
-  (evil-define-key 'visual evil-cleverparens-mode-map
-    "{" 'evil-cp-beginning-of-defun
-    "}" 'evil-cp-end-of-defun
-    "[" nil
-    "]" nil)
 
   (spaceline-compile)
   (spacemacs/load-theme 'base16-ocean))
@@ -546,7 +413,7 @@ This function is called at the very end of Spacemacs initialization."
       ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
    '(package-selected-packages
      (quote
-      (sayid org-brain impatient-mode fuzzy evil-org org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup evil-snipe yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+      (sayid org-brain impatient-mode fuzzy evil-org org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
    '(paradox-github-token t)
    '(pos-tip-background-color "#073642")
    '(pos-tip-foreground-color "#93a1a1")
@@ -616,6 +483,7 @@ This function is called at the very end of Spacemacs initialization."
     ("78c1c89192e172436dbf892bd90562bc89e2cc3811b5f9506226e735a953a9c6" "c796f2b78c5b89b1342f97a8c87ec393f793892d031e690e2a3214abfc9e78f0" "fb3e623e6c6e98f45aea182e56808a11d4c255490e49387a508bfc42251e15d0" "4f15ae94b399f73b10ce7234b882b2b0d8007ed7e3b3dae47e3ef9aa8dd7d315" "b4ec581daad15aa7020b722523dc6bcea850bfbdbe31bfeb11c45ea51899bd75" "09669536b4a71f409e7e2fd56609cd7f0dff2850d4cbfb43916cc1843c463b80" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "b6db49cec08652adf1ff2341ce32c7303be313b0de38c621676122f255ee46db" "e1551b5516e0a439b6ab019ba00cee866e735f66f22ff67a5d882ad0f1383454" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "cdfb22711f64d0e665f40b2607879fcf2607764b2b70d672ddaa26d2da13049f" "c70cc9c4c6257d70f5c11b90cb9e8b1e54e6edd6aa43f39879746e16a70533f5" "03e3e79fb2b344e41a7df897818b7969ca51a15a67dc0c30ebbdeb9ea2cd4492" "e254f8e18ba82e55572c5e18f3ac9c2bd6728a7e500f6cc216e0c6f6f8ea7003" "50e7f9d112e821e42bd2b8410d50de966c35c7434dec12ddea99cb05dd368dd8" default)))
  '(evil-search-module (quote evil-search))
  '(evil-want-Y-yank-to-eol t)
+ '(eyebrowse-mode t)
  '(fci-rule-color "#073642" t)
  '(global-highlight-changes-mode nil)
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
@@ -648,11 +516,12 @@ This function is called at the very end of Spacemacs initialization."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup evil-snipe yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
+ '(spaceline-all-the-icons-eyebrowse-display-name nil)
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
  '(vc-annotate-background nil)
@@ -693,4 +562,5 @@ This function is called at the very end of Spacemacs initialization."
  '(company-tooltip-common-selection ((t (:inherit company-tooltip-selection :weight bold :underline nil))))
  '(font-lock-variable-name-face ((t (:foreground "#dfe1e8"))))
  '(js2-external-variable ((t (:foreground "#dfe1e8"))))
- '(js2-function-param ((t (:foreground "#dfe1e8")))))
+ '(js2-function-param ((t (:foreground "#dfe1e8"))))
+ '(spaceline-all-the-icons-sunset-face ((t (:inherit powerline-active2 :foreground "#fe7714" :height 1.4 :family " Source Code Pro")))))

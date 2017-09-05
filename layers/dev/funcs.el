@@ -120,9 +120,24 @@
   (dev/goto-path-at "https://processing.org/reference/%s_.html"))
 
 
-;; edditing
+;; editing
 
 (fset 'dev/plus-eol-semi-colon [?\C-o ?$ ?\; escape])
 (fset 'dev/plus-comma-next-arg [?\C-o ?a ?\,])
 (fset 'dev/plus-eol-bracket [?\C-o ?a ?\{ return])
 (fset 'dev/change-in-arg [?c ?i ?a])
+(fset 'dev/function-to-export [?c ?w "export"])
+;; cwexport const ea = $i => 
+
+(spacemacs/jump-to-definition)
+(helm-ag)
+
+(defun dev/switch-to-buffer-continue ()
+  "Activate a sparse keymap:
+  <left>   `previous-buffer'
+  <right>  `next-buffer'"
+  (set-transient-map
+   (let ((map (make-sparse-keymap)))
+     (define-key map (kbd "<left>") #'previous-buffer)
+     (define-key map (kbd "<right>") #'next-buffer)
+     map)))
