@@ -32,47 +32,59 @@
 
 (setq dev-packages
       '(evil-easymotion
-        anzu
-        ztree
-        ;; eyebrowse
-
         vertigo
-        delight
-        key-chord
-        ;; evil-cleverparens
-
-        golden-ratio-scroll-screen
-        lispyville
-        all-the-icons
         lispy
-        all-the-icons-ivy
+        lispyville
+        ;; evil-mc
+        anzu
+        keyfreq
+        general
+        key-chord
+        ;; delight
+        golden-ratio-scroll-screen
         spaceline-all-the-icons
+        all-the-icons
+        all-the-icons-ivy
         all-the-icons-dired
         all-the-icons-ivy
-        indium
-        processing-mode
-        keyfreq
-        evil-easymotion
-        general
         skeletor
+        processing-mode
+        indium
         xref-js2))
 
 
 (defun dev/init-vertigo ()
   )
 
+(defun dev/init-xref-js2 ()
+  (use-package xref-js2
+    :defer t
+    :config
+    (progn
+      (define-key js2-mode-map (kbd "M-.") nil)
+      (add-hook 'js2-mode-hook (lambda ()
+                                 (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
+      )))
+
 
 (defun dev/init-golden-ratio-scroll-screen ()
-  (require 'golden-ratio-scroll-screen)
-  (use-package golden-ratio-scroll-screen )
-  ;; (add-hook 'text-mode-hook 'spacemacs/toggle-visual-line-navigation-on)
-
-  ;; (spacemacs/toggle-mode-line)
-  ;; (spaceline-toggle-buffer-size-off)
+  (use-package golden-ratio-scroll-screen
+    :defer t
+    :config
+    (progn
+      (define-key help-mode-map (kbd "C-j") 'golden-ratio-scroll-screen-up)
+      (define-key help-mode-map (kbd "C-k") 'golden-ratio-scroll-screen-down)
+      (set-face-background 'golden-ratio-scroll-highlight-line-face "#4f5b66")
+      (setq golden-ratio-scroll-highlight-delay (cons 0.08 0.1))
+      ;; (set-face-background 'golden-ratio-scroll-highlight-line-face "#8fa1b3")
+      ;; (set-face-background 'golden-ratio-scroll-highlight-line-face "#bf616a")
+      ;; (set-face-background 'golden-ratio-scroll-highlight-line-face "#ebcb8b")
+      ;; (set-face-background 'golden-ratio-scroll-highlight-line-face "#a7adba") ;; red
+      ;; (set-face-background 'golden-ratio-scroll-highlight-line-face "#65737e") ;; grey
+      ))
   )
 
 (defun dev/init-key-chord ()
-
   (use-package key-chord :ensure t
     :defer t
     :config
@@ -84,7 +96,23 @@
   (use-package spaceline-all-the-icons
                :defer t
                :after spaceline
-               :config (spaceline-all-the-icons-theme)))
+               :config (progn
+                         (setq-default spaceline-all-the-icons-separator-type 'none
+                                       spaceline-all-the-icons-icon-set-modified 'toggle
+                                       mode-line-format 'spaceline-all-the-icons
+                                       )
+
+                         (spaceline-toggle-all-the-icons-eyebrowse-workspace-off)
+                         ;; (spaceline-toggle-all-the-icons-hud-off)
+                         ;; (spaceline-toggle-all-the-icons-flycheck-status-info-off)
+                         (spaceline-toggle-all-the-icons-minor-modes-off)
+                         (spaceline-toggle-all-the-icons-mode-icon-off)
+                         (spaceline-toggle-all-the-icons-position-off)
+                         (spaceline-toggle-all-the-icons-projectile-off)
+                         (spaceline-toggle-all-the-icons-time-off)
+                         (spaceline-toggle-all-the-icons-modified-off)
+                         (spaceline-toggle-all-the-icons-buffer-size-off)
+                         (spaceline-all-the-icons-theme))))
 
 (defun dev/init-all-the-icons ()
   (use-package all-the-icons
@@ -99,8 +127,7 @@
 (defun dev/init-all-the-icons-dired ()
   (use-package all-the-icons-dired
     :defer t
-    :config
-    (progn (add-hook 'dired-mode-hook 'all-the-icons-dired-mode))
+    :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
     ))
 
 
@@ -123,10 +150,7 @@
 (defun dev/init-anzu ()
   (use-package anzu
     :defer t
-    :config
-    (progn
-      (global-anzu-mode +1)
-      ))
+    :config (global-anzu-mode +1))
   )
 
 (defun dev/init-indium ()
@@ -134,11 +158,27 @@
     :defer t))
 
 
+(defun dev/init-lispy ()
+  (use-package lispy
+    :defer t
+    :config
+    (progn
+      (general-mmap "C-d" nil) ;; for lispy
+      ;; (add-hook 'lispy-mode-hook #'lispyville-mode)
+      (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
+
+      (add-hook 'clojure-mode-hook #'lispy-mode-hook)
+      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
+      )))
+
 (defun dev/init-lispyville ()
   (use-package lispyville
     :defer t
     :config
     (progn
+      (add-hook 'js2-mode-hook #'lispyville-mode)
+      (add-hook 'clojure-mode-hook #'lispyville-mode)
+      (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
       (add-hook 'lispy-mode-hook #'lispyville-mode)
       )))
 
@@ -148,7 +188,7 @@
   (evilem-define (kbd "ghf") #'evil-repeat-find-char
                  :name 'evilem--motion-evil-find-char-forward-line
                  :scope 'line
-                 :pre-hook (save-excursion
+                :pre-hook (save-excursion
                              ;; (setq evil-this-type 'inclusive)
                              (setq evil-this-type 'exclusive)
                              (call-interactively #'evil-find-char)))
@@ -170,34 +210,12 @@
 
 (defun dev/init-general ()
   (use-package general
-    :defer t
-    :ensure t
-    :config
-    (general-evil-setup t)
-
-    (general-define-key
-     :states '(normal insert emacs)
-     :prefix "C-SPC"
-     :non-normal-prefix "C-SPC"
-     "l" '(avy-goto-line)
-     "a" 'align-regexp
-     )
-
-    ;; (general-define-key
-    ;;  :states '(normal motion insert emacs)
-    ;;  :prefix "SPC"
-    ;;  nil
-    ;;  ;; "ar" '(ranger :which-key "call ranger")
-    ;;  ;; "g"  '(:ignore t :which-key "Git")
-    ;;  ;; "gs" '(magit-status :which-key "git status")
-    ;;  )
-    )
-
-  )
+    :defer t))
 
 (defun dev/init-keyfreq ()
   (setq keyfreq-excluded-commands
         '(self-insert-command
+          evil-delete-backward-char-and-join
           evil-insert
           org-self-insert-command
           abort-recursive-edIT
@@ -232,40 +250,61 @@
     :no-git? t)
   )
 
-(spacemacs|use-package-add-hook helm
-  :post-config (progn
-                 (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
-                 (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
-                 (setq-default helm-autoresize-min-height 50
-                               helm-autoresize-max-height 0)
-                 (setq-default
-                  helm-display-header-line nil
-                  helm-split-window-default-side 'left
-                  helm-always-two-windows t)
+
+
+(defun dev/post-init-helm ()
+  (spacemacs|use-package-add-hook helm
+    :post-init (progn
+                 (general-define-key :states '(emacs)
+                                     :keymaps 'helm-map
+                                     "C-1" (lambda ()
+                                             ;; action 0 is switch to buffer
+                                             (helm-select-nth-action 0))
+                                     "C-2" (lambda ()
+                                             (helm-next-line)
+                                             (helm-select-nth-action 0))
+                                     "C-3" (lambda ()
+                                             (helm-next-line 2)
+                                             (helm-select-nth-action 0))
+                                     "C-4" (lambda ()
+                                             (helm-next-line 3)
+                                             (helm-select-nth-action 0))
+                                     "C-5" (lambda ()
+                                             (helm-next-line 4)
+                                            (helm-select-nth-action 0)))
+
+                 (setq-default helm-display-header-line nil
+                               helm-split-window-default-side 'left
+                               helm-autoresize-min-height 50
+                               helm-autoresize-max-height 0
+                               helm-always-two-windows t)
                  (set-face-attribute 'helm-action nil :underline nil)
                  (set-face-attribute 'helm-match nil :background nil)
                  (add-hook 'helm-after-persistent-action-hook
                            '(lambda () (recenter-top-bottom (car recenter-positions))))
                  (add-hook 'helm-after-action-hook
-                           '(lambda () (recenter-top-bottom (car recenter-positions))))))
+                           '(lambda () (recenter-top-bottom (car recenter-positions))))
 
-(spacemacs|use-package-add-hook hydra
-  :config (progn
-            (defhydra hydra-buffer (:color blue :columns 3)
-              "
-                Buffers :
-  "
-              ("n" next-buffer "next" :color red)
-              ("b" ivy-switch-buffer "switch")
-              ("B" ibuffer "ibuffer")
-              ("p" previous-buffer "prev" :color red)
-              ("C-b" buffer-menu "buffer menu")
-              ("N" evil-buffer-new "new")
-              ("d" kill-this-buffer "delete" :color red)
-              ;; don't come back to previous buffer after delete
-              ("D" (progn (kill-this-buffer) (next-buffer)) "Delete" :color red)
-              ("s" save-buffer "save" :color red))
+                 ))
+  )
 
-            (spacemacs/set-leader-keys
-              "ob" 'hydra-buffer/body)
-            ))
+;; (spacemacs|use-package-add-hook hydra
+;;   :post-config (progn
+;;                  (defhydra hydra-buffer (:color blue :columns 3)
+;;                    "
+;;                 Buffers :
+;;   "
+;;                    ("n" next-buffer "next" :color red)
+;;                    ("b" ivy-switch-buffer "switch")
+;;                    ("B" ibuffer "ibuffer")
+;;                    ("p" previous-buffer "prev" :color red)
+;;                    ("C-b" buffer-menu "buffer menu")
+;;                    ("N" evil-buffer-new "new")
+;;                    ("d" kill-this-buffer "delete" :color red)
+;;                    ;; don't come back to previous buffer after delete
+;;                    ("D" (progn (kill-this-buffer) (next-buffer)) "Delete" :color red)
+;;                    ("s" save-buffer "save" :color red))
+
+;;                  (spacemacs/set-leader-keys
+;;                    "ob" 'hydra-buffer/body)
+;;                  ))

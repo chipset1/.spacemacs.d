@@ -5,118 +5,112 @@
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
-  (setq-default
-   dotspacemacs-distribution 'spacemacs
-   dotspacemacs-elpa-https t
-   dotspacemacs-configuration-layer-path '("~/.spacemacs.d/layers")
-   dotspacemacs-configuration-layers ;;dev--layers
-   '((auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'complete
-                      auto-completion-enable-snippets-in-popup t)
-     org
-     (shell :variables shell-default-shell 'eshell)
-     emacs-lisp
-     ;;deft
-     racket
-     python
-     javascript
-     (clojure :variables
-              clojure-enable-fancify-symbols t)
+  (setq-default dotspacemacs-distribution 'spacemacs
+                dotspacemacs-elpa-https t
+                dotspacemacs-startup-banner 'nil
+                ;; dotspacemacs-smart-closing-parenthesis
+                dotspacemacs-configuration-layer-path '("~/.spacemacs.d/layers")
+                dotspacemacs-configuration-layers ;;dev--layers
+                '((auto-completion :variables
+                                   auto-completion-return-key-behavior 'complete
+                                   auto-completion-tab-key-behavior 'complete
+                                   auto-completion-enable-snippets-in-popup t)
+                  org
+                  ;; df-tools
+                  (shell :variables shell-default-shell 'eshell)
+                  emacs-lisp
+                  racket
+                  python
+                  javascript
+                  (clojure :variables
+                           clojure-enable-fancify-symbols t)
+                  markdown
+                  html
+                  git
+                  ibuffer
+                  (ranger :variables
+                          ranger-preview-file t)
+                  dev
+                  online-thesaurus)
 
-     markdown
-     html
-     git
-     ;;powershell
-     ;; vinegar
-     ibuffer
-     (ranger :variables
-             ranger-show-preview t)
-     dev
-     online-thesaurus)
-   dotspacemacs-additional-packages '(base16-theme
-                                      ;; atom-dark-theme
-                                      sublime-themes
-                                      ;; elmacro
-                                      annoying-arrows-mode
-                                      xref-js2
-                                      ;; processing-mode
-                                      )
-   dotspacemacs-excluded-packages '()
-   ;; dotspacemacs-configuration-layers dev--layers
-   dotspacemacs-delete-orphan-packages t))
+                dotspacemacs-additional-packages '(base16-theme
+                                                   ;; atom-dark-theme
+                                                   sublime-themes)
+                dotspacemacs-excluded-packages '()
+                ;; dotspacemacs-configuration-layers dev--layers
+                dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
-  (setq-default
-   dotspacemacs-smooth-scrolling t
-   dotspacemacs-line-numbers nil ;;'relative
-   dotspacemacs-editing-style 'vim
-   dotspacemacs-verbose-loading nil
-   dotspacemacs-startup-banner 'official
-   ;; dotspacemacs-distinguish-gui-tab t
-   dotspacemacs-startup-lists '(recents bookmarks)
-   dotspacemacs-default-theme 'base16-ocean
-   dotspacemacs-themes '(base16-ocean)
-   dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-mode-line-unicode-symbols nil
-   dotspacemacs-default-font '("Source Code Pro";;"Anonymous Pro for Powerline"
-                               :size 18
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.5)
-   dotspacemacs-leader-key "SPC"
-   dotspacemacs-emacs-leader-key "M-m"
-   dotspacemacs-major-mode-leader-key ","
-   dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   dotspacemacs-ex-command-key ";"
-   dotspacemacs-command-key "SPC"
-   dotspacemacs-remap-Y-to-y$ t
-   dotspacemacs-auto-save-file-location 'cache
-   dotspacemacs-auto-resume-layouts t
-   dotspacemacs-use-ido nil ;; ido or helm
-   dotspacemacs-helm-resize t
-   dotspacemacs-helm-no-header nil
-   dotspacemacs-helm-position 'bottom
-   dotspacemacs-enable-paste-micro-state nil
-   dotspacemacs-which-key-delay 0.4
-   dotspacemacs-which-key-position 'bottom
-   dotspacemacs-loading-progress-bar t
-   dotspacemacs-fullscreen-at-startup nil
-   dotspacemacs-fullscreen-use-non-native nil
-   dotspacemacs-maximized-at-startup t
-   dotspacemacs-active-transparency 97
-   dotspacemacs-inactive-transparency 97
-   ;; If non nil unicode symbols are displayed in the mode line. (default t)
-   dotspacemacs-mode-line-unicode-symbols t
-   dotspacemacs-smooth-scrolling t
-   dotspacemacs-smartparens-strict-mode t
-   dotspacemacs-highlight-delimiters 'all
-   dotspacemacs-persistent-server nil
-   dotspacemacs-search-tools '("ag" "grep")
-   ;; The default package repository used if no explicit repository has been
-   ;; specified with an installed package.
-   ;; Not used for now. (default nil)
-   dotspacemacs-default-package-repository nil))
+  (setq-default dotspacemacs-smooth-scrolling t
+                dotspacemacs-line-numbers nil ;;'relative
+                dotspacemacs-editing-style 'vim
+                dotspacemacs-verbose-loading nil
+                dotspacemacs-startup-banner 'official
+                ;; dotspacemacs-distinguish-gui-tab t
+                dotspacemacs-startup-lists '(recents bookmarks)
+                dotspacemacs-default-theme 'base16-ocean
+                dotspacemacs-themes '(base16-ocean)
+                dotspacemacs-colorize-cursor-according-to-state t
+                dotspacemacs-mode-line-unicode-symbols nil
+                dotspacemacs-default-font '("Source Code Pro";;"Anonymous Pro for Powerline"
+                                            :size 18
+                                            :weight normal
+                                            :width normal
+                                            :powerline-scale 1.5)
+                dotspacemacs-leader-key "SPC"
+                dotspacemacs-emacs-leader-key "M-m"
+                dotspacemacs-major-mode-leader-key ","
+                dotspacemacs-major-mode-emacs-leader-key "C-M-m"
+                dotspacemacs-ex-command-key ";"
+                dotspacemacs-command-key "SPC"
+                dotspacemacs-remap-Y-to-y$ t
+                dotspacemacs-auto-save-file-location 'cache
+                dotspacemacs-auto-resume-layouts t
+                dotspacemacs-use-ido nil ;; ido or helm
+                dotspacemacs-helm-resize t
+                dotspacemacs-helm-no-header nil
+                dotspacemacs-helm-position 'bottom
+                dotspacemacs-enable-paste-micro-state nil
+                dotspacemacs-which-key-delay 0.4
+                dotspacemacs-which-key-position 'bottom
+                dotspacemacs-loading-progress-bar t
+                dotspacemacs-fullscreen-at-startup nil
+                dotspacemacs-fullscreen-use-non-native nil
+                dotspacemacs-maximized-at-startup t
+                dotspacemacs-active-transparency 97
+                dotspacemacs-inactive-transparency 97
+                ;; If non nil unicode symbols are displayed in the mode line. (default t)
+                dotspacemacs-mode-line-unicode-symbols t
+                dotspacemacs-smooth-scrolling t
+                dotspacemacs-smartparens-strict-mode t
+                dotspacemacs-highlight-delimiters 'all
+                dotspacemacs-persistent-server nil
+                dotspacemacs-search-tools '("ag" "grep")
+                ;; The default package repository used if no explicit repository has been
+                ;; specified with an installed package.
+                ;; Not used for now. (default nil)
+                dotspacemacs-default-package-repository nil))
 
 (defun dotspacemacs/user-init ()
   (desktop-save-mode 1)
-
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
-
+  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
+  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
+  (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
-  (setq dev/helm-processing-find-sketch
-        '((name . "Sketches")
-          (candidates . (lambda ()
-                          (directory-files processing-sketch-dir
-                                           nil
-                                           nil
-                                           #'file-newer-than-file-p)))
-          (action . (lambda (candidate)
-                      (message "%s" candidate)
-                      (processing-find-sketch candidate)))))
+  (add-to-list 'exec-path "~/.babun/cygwin/bin")
+  ;; (add-to-list 'exec-path "/usr/bin")
+  (add-to-list 'projectile-project-root-files "index.html")
+  (add-to-list 'projectile-project-root-files ".pde")
+
+  (set-default-coding-systems 'utf-8-unix)
+  (defalias 'ag 'ag.exe)
+  (defalias 'python 'python2.7.exe)
+  (defalias 'ff 'find-file-other-window)
+
   ;; blue
   ;; (set-face-background 'spacemacs-normal-face "#8fa1b3")
   ;; (setq evil-normal-state-cursor "#8fa1b3")
@@ -126,30 +120,13 @@ values."
   ;; (setq evil-normal-state-cursor "#bf616a")
 
   ;; white / grey
-  (set-face-background 'spacemacs-normal-face "#c0c5ce")
-
-  ;; (setq ranger-width-parents 0.2)
-  ;; (setq ranger-cleanup-eagerly t)
-
-  (helm-autoresize-mode 1)
-  (setq helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-        helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-        helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-        ;; helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-        ;; helm-ff-file-name-history-use-recentf t
-        helm-echo-input-in-header-line t)
-
+  ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (setq-default magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
                 js2-basic-offset 2
 
                 dumb-jump-prefer-searcher 'ag
                 helm-ag-ignore-buffer-patterns '("/lib/" ".log")
                 ivy-height 20
-
-                mode-line-format 'spaceline-all-the-icons
-
-                spaceline-all-the-icons-icon-set-modified 'toggle
-                spaceline-all-the-icons-separator-type 'none
 
                 ;; to stop ag crashing emacs
                 helm-input-idle-delay 0.1
@@ -162,6 +139,14 @@ values."
                 helm-imenu-fuzzy-match t
                 helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
 
+                helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+                helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+                helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+                ;; helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+                ;; helm-ff-file-name-history-use-recentf t
+                helm-echo-input-in-header-line t
+
+                projectile-indexing-method 'alien ;; speed up indexing on windows
 
                 powerline-default-separator nil
 
@@ -175,20 +160,9 @@ values."
                 org-bullets-bullet-list '("■" "◆" "▲" "▶")
                 neo-theme 'nerd
 
-                projectile-indexing-method 'alien ;; speed up indexing on windows
                 yas-snippet-dirs '("~/.spacemacs.d/snippets")
                 dired-listing-switches "-Al --si --time-style long-iso -t"
                 )
-
-  (add-to-list 'exec-path "C:/Users/stephen/.babun/cygwin/bin")
-  (add-to-list 'exec-path "/usr/bin")
-  (add-to-list 'projectile-project-root-files "index.html")
-  (add-to-list 'projectile-project-root-files ".pde")
-
-  (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
-  (setq coding-system-for-write 'utf-8 )
-  (defalias 'ag 'ag.exe)
-  (defalias 'ff 'find-file-other-window)
   )
 
 (defun scroll-to-center-advice (&rest args)
@@ -197,77 +171,28 @@ values."
 (defun save-buffer-advice (&rest args)
   (save-buffer))
 
-(defun helm-processing-find-sketch ()
-  (interactive)
-  (helm :sources '(dev/helm-processing-find-sketch)
-        :buffer "*helm-processing-find-sketch*"))
-
 (defun dotspacemacs/user-config ()
   " layers configuration. You are free to put any user code."
-  (setq ranger-width-preview 0.9)
+  ;; (setq ranger-width-preview 0.9)
   (golden-ratio-mode t)
-
   (helm-autoresize-mode t)
+  (helm-autoresize-mode 1)
+  (setq-default  powerline-default-separator nil
+                 ranger-show-literal t
+                 ranger-width-preview 0.55
+                 reb-re-syntax 'rx)
 
   (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
-  ;; (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
 
-
-
-  (setq-default  powerline-default-separator nil)
   (global-set-key (kbd "M-`") (lambda ()
                                 (interactive)
                                 (find-file "~/src/notes/weekly-goals.org")))
 
-  (define-key helm-map (kbd "C-1") (lambda ()
-                                     (interactive)
-                                     ;; action 0 is switch to buffer
-                                     (helm-select-nth-action 0)))
-  (define-key helm-map (kbd "C-2") (lambda ()
-                                     (interactive)
-                                     (helm-next-line)
-                                     (helm-select-nth-action 0)))
-  (define-key helm-map (kbd "C-3") (lambda ()
-                                     (interactive)
-                                     (helm-next-line 2)
-                                     (helm-select-nth-action 0)))
-  (define-key helm-map (kbd "C-4") (lambda ()
-                                     (interactive)
-                                     (helm-next-line 3)
-                                     (helm-select-nth-action 0)))
-
-  (define-key helm-map (kbd "C-5") (lambda ()
-                                     (interactive)
-                                     (helm-next-line 4)
-                                     (helm-select-nth-action 0)))
-
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-
-
-  ;; (define-key js2-mode-map (kbd "M-.") nil)
-  ;; imenu-sort-function
-  ;; imenu-sort-functioimenu-sort-functionn
-
-
-  (advice-add 'previous-buffer :after #'dev/switch-to-buffer-continue)
-  (advice-add 'next-buffer :after #'dev/switch-to-buffer-continue)
-
-  (advice-add 'last-buffer :after #'dev/switch-to-buffer-continue)
-
-  (add-hook 'js2-mode-hook (lambda ()
-                             (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
-
-  (add-hook 'js2-mode-hook #'lispyville-mode)
-  (add-hook 'clojure-mode-hook #'lispyville-mode)
-  (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
-
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-  ;; (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
   (add-hook 'js2-mode-hook (lambda ()
                              (interactive)
                              (add-hook 'evil-insert-state-exit-hook
@@ -276,12 +201,10 @@ values."
                                          (save-buffer))
                                        nil
                                        'make-it-local)))
-
-
-  (evil-add-command-properties #'jump-to-definition :jump t)
-  (evil-add-command-properties #'goto-last-change :jump t)
-  ;; (helm-semantic)
-
+  ;; add to b
+  (advice-add 'previous-buffer :after #'dev/switch-to-buffer-continue)
+  (advice-add 'next-buffer :after #'dev/switch-to-buffer-continue)
+  (advice-add 'last-buffer :after #'dev/switch-to-buffer-continue)
   (advice-add #'evil-jump-backward :after #'scroll-to-center-advice)
   (advice-add #'evil-ex-search-previous :after #'scroll-to-center-advice)
   (advice-add #'evil-ex-search-next :after #'scroll-to-center-advice)
@@ -289,63 +212,8 @@ values."
   (advice-add #'goto-last-change :after #'scroll-to-center-advice)
   (advice-add #'evil-goto-mark-line :after #'scroll-to-center-advice)
   (advice-add #'evil-replace :after #'save-buffer-advice)
-
-  ;; (fset 'dev/plus-eol-semi-colon [?\C-o ?$ ?\; escape])
-  ;; (define-key evil-insert-state-map (kbd "C-;") 'dev/plus-eol-semi-colon)
-
-  ;; (fset 'dev/plus-comma-next-arg [?\C-o ?a ?\,])
-  ;; (define-key evil-insert-state-map (kbd "C-,") 'dev/plus-comma-next-arg)
-
-
-  ;; (fset 'dev/plus-eol-bracket [?\C-o ?a ?\{ return])
-  ;; (define-key evil-insert-state-map (kbd "C-'") 'dev/plus-eol-bracket)
-
-  ;; (fset 'dev/change-in-arg [?c ?i ?a])
-  ;; (define-key evil-normal-state-map (kbd "C-l") 'dev/change-in-arg)
-  ;; (define-key evil-normal-state-map (kbd "C-;") 'evilnc-comment-or-uncomment-lines)
-
-  ;; (define-key evil-normal-state-map (kbd "(") 'sp-backward-up-sexp)
-  ;; (define-key evil-normal-state-map (kbd ")") 'sp-up-sexp)
-  ;; (define-key evil-ex-completion-map (kbd ";") 'exit-minibuffer) ;; maybe change this to evil write
-  ;; (define-key evil-normal-state-map (kbd "0") 'evil-first-non-blank)
-  ;; (define-key evil-normal-state-map (kbd "H") 'evil-backward-WORD-begin)
-  ;; (define-key evil-normal-state-map (kbd "L") 'evil-forward-WORD-begin)
-
-  ;; (define-key evil-operator-state-map (kbd "H") 'evil-backward-WORD-begin)
-  ;; (define-key evil-operator-state-map (kbd "L") 'evil-forward-WORD-begin)
-
-  ;; (define-key evil-visual-state-map (kbd "H") 'evil-backward-WORD-begin)
-  ;; (define-key evil-visual-state-map (kbd "L") 'evil-forward-WORD-begin)
-  ;; (define-key evil-normal-state-map (kbd "-") 'deer)
-
-  ;; (define-key evil-normal-state-map (kbd "C-k") 'evil-scroll-page-up)
-  ;; (define-key evil-normal-state-map (kbd "C-j") 'evil-scroll-page-down)
-
-  ;; (define-key evil-normal-state-map (kbd "Q") (lambda ()
-  ;;                                               (interactive)
-  ;;                                               (evil-execute-macro 1 "@q")))
-
-
-  ;; (define-key evil-normal-state-map (kbd "gl") 'evil-avy-goto-line)
-  ;; (define-key evil-normal-state-map (kbd "gs") 'magit-status)
-
-  ;; durp windows http://emacs.stackexchange.com/questions/30275/c-not-recognized-on-windows-10
-  ;; for binding C-)
-  ;; (define-key evil-normal-state-map (kbd "M-)") 'sp-forward-slurp-sexp)
-  ;; (define-key evil-insert-state-map (kbd "M-)") 'sp-forward-slurp-sexp)
-  ;; (define-key evil-normal-state-map (kbd "M-(") 'paredit-wrap-sexp)
-  ;; (define-key evil-insert-state-map (kbd "M-(") 'paredit-wrap-sexp)
-  ;; (define-key evil-normal-state-map (kbd "M-(") 'wrap)
-  ;; (define-key evil-insert-state-map (kbd "M-(") 'wrap)
-
-
-
-  ;; (define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
-  ;; (define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
-  ;; (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
-
-  ;; doesn't work
-  ;; (define-key evil-insert-state-map (kbd "TAB") 'yas-expand)
+  (evil-add-command-properties #'jump-to-definition :jump t)
+  (evil-add-command-properties #'goto-last-change :jump t)
 
   (evilified-state-evilify skewer-error-mode skewer-error-mode-map
     (kbd "q") 'quit-window)
@@ -516,7 +384,7 @@ This function is called at the very end of Spacemacs initialization."
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
  '(package-selected-packages
    (quote
-    (golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (org-category-capture gntp skewer-mode simple-httpd json-snatcher json-reformat haml-mode gitignore-mode fuzzy web-completion-data dash-functional tern inflections edn multiple-cursors peg queue pythonic auto-complete smooth-scrolling pdf-tools tablist golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
