@@ -1,5 +1,6 @@
 (general-evil-setup)
 
+
 ;; durp windows http://emacs.stackexchange.com/questions/30275/c-not-recognized-on-windows-10
 
 ;; (general-define-key
@@ -15,6 +16,10 @@
 ;;        )
 ;;  )
 
+(global-set-key (kbd "M-`") (lambda ()
+                              (interactive)
+                              (find-file "~/src/notes/weekly-goals.org")))
+
 (general-nmap "(" 'sp-backward-up-sexp
               "0" 'evil-first-non-blank
               "-" 'deer
@@ -27,30 +32,29 @@
               "[j" 'vertigo-jump-down
               "[k" 'vertigo-jump-up
               "gj" 'spacemacs/helm-jump-in-buffer
-              "gf" 'ivy-switch-buffer
+              "gf" 'helm-find-files
               "C-f" 'anzu-query-replace
               ";" 'save-buffer
-              ;; "C-k" 'evil-scroll-page-up
-              ;; "C-j" 'evil-scroll-page-down
-
-              ;; "C-k" 'golden-ratio-scroll-screen-down
-              ;; "C-j" 'golden-ratio-scroll-screen-up
               "C-=" 'evil-numbers/inc-at-pt
               "C--" 'evil-numbers/dec-at-pnt
               "C-l" 'dev/change-in-arg
               "C-;" 'evilnc-comment-or-uncomment-lines
-              "C-d" nil ;; for lispy
               "U" 'undo-tree-redo
               )
 
-
-
-;; paren , curly operator change to letters
 (general-omap "ip" 'evil-inner-paren    ;; was evil-paste?
               "ap" 'evil-a-paren        ;; evil paragraph
               "ik" 'evil-inner-curly
               "ak" 'evil-a-curly
               )
+
+(general-define-key :states '(normal insert)
+                    :keymaps 'lispy-mode-map
+                    "D" 'lispy-kill)
+
+(general-define-key :states '(normal)
+                    :keymaps 'lispy-mode-map
+                    "Y" (general-simulate-keys "ya("))
 
 (general-define-key :states '(normal insert)
                     "M-)" 'evil-lisp-state-sp-forward-slurp-sexp
@@ -69,7 +73,6 @@
 
 ;; (define-key evil-ex-completion-map (kbd ";") 'exit-minibuffer) ;; maybe change this to evil write
 
-;; package specific
 (general-define-key :states '(normal insert)
                     :keymaps 'org-mode-map
                     "C-t"  (lambda ()
@@ -79,7 +82,6 @@
 
 
 (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
-;; (define-key calc-mode-map (kbd "C-c C-r") 'ca)
 
 (spacemacs/set-leader-keys-for-major-mode 'org-mode
   "os" 'org-timer-start
@@ -97,17 +99,25 @@
   "5" 'query-replace
   "z-" 'spacemacs/decrease-transparency
   "z=" 'spacemacs/increase-transparency
-  "gc" 'magit-checkout
-  "ot" 'thesaurus
-  "bk" 'kill-this-buffer
-  "ov" (lambda ()
+  "bm" (lambda ()
          (interactive)
-         (let ((start-point (point)))
-           (evil-find-char 1 (string-to-char "("))
-           (forward-char)
-           (sp-up-sexp)
-           (evil-visual-select start-point (+ 1 (point)))))
+         (switch-to-buffer "*Messages*"))
+  "gc" 'magit-checkout
+  "bk" 'kill-this-buffer
+  "bo" (lambda ()
+         (interactive)
+         (find-file "~/src/notes/organiser.org"))
+  "at" 'org-capture
+
+  ;; "ov" (lambda ()
+  ;;        (interactive)
+  ;;        (let ((start-point (point)))
+  ;;          (evil-find-char 1 (string-to-char "("))
+  ;;          (forward-char)
+  ;;          (sp-up-sexp)
+  ;;          (evil-visual-select start-point (+ 1 (point)))))
   "os" 'dev/to-unix-file
+  "ot" 'thesaurus
   "or" (lambda () "test"
          (interactive)
          (cond ((eq 'processing-mode major-mode)
@@ -123,12 +133,20 @@
   "oo" 'clojure-comment-uncomment
   "op" 'dev/helm-processing-find-sketch
   "oe" 'dev/open-in-explorer
+
   ;; "ou" 'comment-map
   ;; "of" 'comment-defn
   ;; "obf" 'comment-before-defn
-  "ol" 'comment-line
+  ;; "ol" 'comment-line
   ;; "oe" 'cider-pprint-eval-defun-at-point
   )
 
 (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
   "ep" 'cider-pprint-eval-defun-at-point)
+
+(spacemacs/set-leader-keys-for-major-mode 'clojurescript-mode
+  "ec" (lambda ()
+         (interactive)
+         ;; (shell-command "lumo C:/Users/stephen/.spacemacs.d/layers/dev/w3m.cljs ")
+         (switch-to-buffer "*Shell Command Output*"))
+  )

@@ -10,9 +10,7 @@
                                         ;   when done, or disable `exec-path-from-shell-check-startup-files' t
                                         ;   o disable this message.
                                         ; Done.
-
-;; See the Spacemacs documentation and FAQs for instructions on how to implement
-;; a new layer:
+;; See the Spacemacs documentation and FAQs for instructions on how to implement ;; a new layer:
 ;;
 ;;   SPC h SPC layers RET
 ;;
@@ -34,6 +32,7 @@
       '(evil-easymotion
         vertigo
         lispy
+        rainbow-mode
         lispyville
         ;; evil-mc
         anzu
@@ -52,6 +51,12 @@
         indium
         xref-js2))
 
+(defun dev/init-rainbow-mode ()
+  (use-package rainbow-mode
+    :defer t
+    :config (progn (add-hook 'html-mode-hook 'rainbow-mode)
+                   (add-hook 'js2-mode-hook 'rainbow-mode)
+                   (add-hook 'css-mode-hook 'rainbow-mode))))
 
 (defun dev/init-vertigo ()
   )
@@ -62,6 +67,10 @@
     :config
     (progn
       (define-key js2-mode-map (kbd "M-.") nil)
+
+      ;; (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)
+      ;; (define-key esc-map (kbd "M-?") 'xref-js2--find-references)
+
       (add-hook 'js2-mode-hook (lambda ()
                                  (add-hook 'xref-backend-functions #'xref-js2-xref-backend nil t)))
       )))
@@ -89,30 +98,31 @@
     :defer t
     :config
     (setq key-chord-two-keys-delay 0.2)
-    (use-package key-seq :ensure t))
+    ;; (use-package key-seq :ensure t)
+    )
   )
 
 (defun dev/init-spaceline-all-the-icons ()
   (use-package spaceline-all-the-icons
-               :defer t
-               :after spaceline
-               :config (progn
-                         (setq-default spaceline-all-the-icons-separator-type 'none
-                                       spaceline-all-the-icons-icon-set-modified 'toggle
-                                       mode-line-format 'spaceline-all-the-icons
-                                       )
+    :defer t
+    :after spaceline
+    :config (progn
+              (setq-default spaceline-all-the-icons-separator-type 'none
+                            spaceline-all-the-icons-icon-set-modified 'toggle
+                            mode-line-format 'spaceline-all-the-icons)
 
-                         (spaceline-toggle-all-the-icons-eyebrowse-workspace-off)
-                         ;; (spaceline-toggle-all-the-icons-hud-off)
-                         ;; (spaceline-toggle-all-the-icons-flycheck-status-info-off)
-                         (spaceline-toggle-all-the-icons-minor-modes-off)
-                         (spaceline-toggle-all-the-icons-mode-icon-off)
-                         (spaceline-toggle-all-the-icons-position-off)
-                         (spaceline-toggle-all-the-icons-projectile-off)
-                         (spaceline-toggle-all-the-icons-time-off)
-                         (spaceline-toggle-all-the-icons-modified-off)
-                         (spaceline-toggle-all-the-icons-buffer-size-off)
-                         (spaceline-all-the-icons-theme))))
+              (spaceline-toggle-all-the-icons-eyebrowse-workspace-off)
+              ;; (spaceline-toggle-all-the-icons-hud-off)
+              ;; (spaceline-toggle-all-the-icons-flycheck-status-info-off)
+              (spaceline-toggle-all-the-icons-minor-modes-off)
+              ;; (spaceline-toggle-all-the-icons-mode-icon-off)
+              (spaceline-toggle-all-the-icons-position-off)
+              (spaceline-toggle-all-the-icons-projectile-off)
+              (spaceline-toggle-all-the-icons-time-off)
+              (spaceline-toggle-all-the-icons-modified-off)
+              (spaceline-toggle-all-the-icons-buffer-size-off)
+              (spaceline-all-the-icons-theme)
+              )))
 
 (defun dev/init-all-the-icons ()
   (use-package all-the-icons
@@ -131,20 +141,20 @@
     ))
 
 
-(defun dev/init-delight ()
-  (delight 'emacs-lisp-mode
-           '("Elisp" (lexical-binding ":Lex" ":Dyn"))
-           :major)
-  (use-package delight
-    :defer t
-    :ensure nil
-    :config
-    (progn
-      (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
-        (let ((inhibit-mode-name-delight nil)) ad-do-it))
-      (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
-        (let ((inhibit-mode-name-delight nil)) ad-do-it))))
-  )
+;; (defun dev/init-delight ()
+;;   (use-package delight
+;;     :defer t
+;;     :ensure nil
+;;     :config
+;;     (progn
+;;       (delight 'emacs-lisp-mode
+;;                '("Elisp" (lexical-binding ":Lex" ":Dyn"))
+;;                :major)
+;;       (defadvice powerline-major-mode (around delight-powerline-major-mode activate)
+;;         (let ((inhibit-mode-name-delight nil)) ad-do-it))
+;;       (defadvice powerline-minor-modes (around delight-powerline-minor-modes activate)
+;;         (let ((inhibit-mode-name-delight nil)) ad-do-it))))
+;;   )
 
 
 (defun dev/init-anzu ()
@@ -157,7 +167,6 @@
   (use-package indium
     :defer t))
 
-
 (defun dev/init-lispy ()
   (use-package lispy
     :defer t
@@ -165,11 +174,10 @@
     (progn
       (general-mmap "C-d" nil) ;; for lispy
       ;; (add-hook 'lispy-mode-hook #'lispyville-mode)
-      (add-hook 'emacs-lisp-mode-hook #'lispy-mode)
+      ;; (add-hook 'emacs-lisp-mode-hook #'lispy-mode-hook)
 
-      (add-hook 'clojure-mode-hook #'lispy-mode-hook)
-      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1)))
-      )))
+      ;; (add-hook 'clojure-mode-hook #'lispy-mode-hook)
+      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))))
 
 (defun dev/init-lispyville ()
   (use-package lispyville
@@ -232,6 +240,7 @@
 
 (defun dev/init-processing-mode ()
   (use-package processing-mode
+    :defer t
     :config
     (progn
       (setq-default processing-location "~/processing-3.0b6/processing-java.exe"
@@ -250,61 +259,30 @@
     :no-git? t)
   )
 
-
-
 (defun dev/post-init-helm ()
   (spacemacs|use-package-add-hook helm
-    :post-init (progn
-                 (general-define-key :states '(emacs)
-                                     :keymaps 'helm-map
-                                     "C-1" (lambda ()
-                                             ;; action 0 is switch to buffer
-                                             (helm-select-nth-action 0))
-                                     "C-2" (lambda ()
-                                             (helm-next-line)
-                                             (helm-select-nth-action 0))
-                                     "C-3" (lambda ()
-                                             (helm-next-line 2)
-                                             (helm-select-nth-action 0))
-                                     "C-4" (lambda ()
-                                             (helm-next-line 3)
-                                             (helm-select-nth-action 0))
-                                     "C-5" (lambda ()
-                                             (helm-next-line 4)
-                                            (helm-select-nth-action 0)))
+    :post-config (progn
+                   (general-define-key :states '(emacs)
+                                       :keymaps 'helm-map
+                                       "C-1" (lambda ()
+                                               ;; action 0 is switch to buffer
+                                               (helm-select-nth-action 0))
+                                       "C-2" (lambda ()
+                                               (helm-next-line)
+                                               (helm-select-nth-action 0))
+                                       "C-3" (lambda ()
+                                               (helm-next-line 2)
+                                               (helm-select-nth-action 0))
+                                       "C-4" (lambda ()
+                                               (helm-next-line 3)
+                                               (helm-select-nth-action 0))
+                                       "C-5" (lambda ()
+                                               (helm-next-line 4)
+                                               (helm-select-nth-action 0)))
 
-                 (setq-default helm-display-header-line nil
-                               helm-split-window-default-side 'left
-                               helm-autoresize-min-height 50
-                               helm-autoresize-max-height 0
-                               helm-always-two-windows t)
-                 (set-face-attribute 'helm-action nil :underline nil)
-                 (set-face-attribute 'helm-match nil :background nil)
-                 (add-hook 'helm-after-persistent-action-hook
-                           '(lambda () (recenter-top-bottom (car recenter-positions))))
-                 (add-hook 'helm-after-action-hook
-                           '(lambda () (recenter-top-bottom (car recenter-positions))))
-
-                 ))
-  )
-
-;; (spacemacs|use-package-add-hook hydra
-;;   :post-config (progn
-;;                  (defhydra hydra-buffer (:color blue :columns 3)
-;;                    "
-;;                 Buffers :
-;;   "
-;;                    ("n" next-buffer "next" :color red)
-;;                    ("b" ivy-switch-buffer "switch")
-;;                    ("B" ibuffer "ibuffer")
-;;                    ("p" previous-buffer "prev" :color red)
-;;                    ("C-b" buffer-menu "buffer menu")
-;;                    ("N" evil-buffer-new "new")
-;;                    ("d" kill-this-buffer "delete" :color red)
-;;                    ;; don't come back to previous buffer after delete
-;;                    ("D" (progn (kill-this-buffer) (next-buffer)) "Delete" :color red)
-;;                    ("s" save-buffer "save" :color red))
-
-;;                  (spacemacs/set-leader-keys
-;;                    "ob" 'hydra-buffer/body)
-;;                  ))
+                   (setq-default helm-display-header-line nil
+                                 helm-split-window-default-side 'left
+                                 helm-autoresize-min-height 50
+                                 helm-autoresize-max-height 0
+                                 helm-always-two-windows t)
+                   )))

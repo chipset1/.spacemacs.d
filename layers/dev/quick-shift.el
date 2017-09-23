@@ -1,31 +1,52 @@
 
 (defvar quick-shift--project-buffers nil)
 
-(setq quick-shift--project-buffers '((".spacemacs.d" ("funcs.el"
+(setq quick-shift--project-buffers '((".spacemacs.d" ("keybindings.el"
                                                       "packages.el"
-                                                      "keybindings.el"))
+                                                      "funcs.el"))
                                      ("game4" ("prototype1.js"
                                                "tasks.org"
                                                "webpack.config.js"))))
 
-(defun quick-shift/ff-at-project (n project-name file-names)
+;; (find-file "keybindings.el")
+
+(defun quick-shift/view-buffers ()
+  (define-key popwin:keymap (kbd "q") 'popwin:close-popup-window)
+  (set-window-configuration (current-window-configuration))
+  ;; (popwin:create-popup-window 30 'bottom nil)
+
+  ;; (set-window-buffer nil "buffer1")
+  ;; (set-window-buffer (split-window (selected-window) helm-autoresize-min-height t) "buffer2")
+
+  (switch-to-buffer "*popwin-dummy*")
+  (insert quick-shift--project-buffers)
+  )
+
+(defun quick-shift--ff-at-project (n project-name file-names)
   (when (string-equal (projectile-project-name) project-name)
-    (switch-to-buffer (nth n (nth 0 file-names))
-                      nil 'force-same-window)
+    (find-file (nth n (nth 0 file-names)))
+    ;; (switch-to-buffer (nth n (nth 0 file-names))
+    ;;                   nil 'force-same-window)
     ))
 
-(defun quick--shift--window (n)
+(defun quick-shift--window (n)
   (mapcar #'(lambda (pb)
-              (quick-shift/ff-at-project n (car pb) (cdr pb)))
-          quick-shift--project-buffers)
-  )
+              (quick-shift--ff-at-project n (car pb) (cdr pb)))
+          quick-shift--project-buffers))
+
+;;  todo
+;; (defun quick-shift-set-buffers (p buffers)
+;;   ;; (cons '(1 2 3)  1)
+;;   (setq (quick-shift--project-buffers) ))
 
 (defun quick-shift-1 ()
   (interactive)
   (quick-shift--window 0))
+
 (defun quick-shift-2 ()
   (interactive)
   (quick-shift--window 1))
+
 (defun quick-shift-3 ()
   (interactive)
   (quick-shift--window 2))

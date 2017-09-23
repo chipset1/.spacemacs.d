@@ -44,7 +44,8 @@ values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default dotspacemacs-smooth-scrolling t
-                dotspacemacs-line-numbers nil ;;'relative
+                dotspacemacs-line-numbers nil
+                ;;'relative
                 dotspacemacs-editing-style 'vim
                 dotspacemacs-verbose-loading nil
                 dotspacemacs-startup-banner 'official
@@ -54,7 +55,7 @@ values."
                 dotspacemacs-themes '(base16-ocean)
                 dotspacemacs-colorize-cursor-according-to-state t
                 dotspacemacs-mode-line-unicode-symbols nil
-                dotspacemacs-default-font '("Source Code Pro";;"Anonymous Pro for Powerline"
+                dotspacemacs-default-font '("Source Code Pro" ;;"Anonymous Pro for Powerline"
                                             :size 18
                                             :weight normal
                                             :width normal
@@ -93,6 +94,7 @@ values."
                 ;; Not used for now. (default nil)
                 dotspacemacs-default-package-repository nil))
 
+
 (defun dotspacemacs/user-init ()
   (desktop-save-mode 1)
   (set-fringe-mode 0)
@@ -101,10 +103,19 @@ values."
   (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
   (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
+  ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
+
+  ;; (spacemacs/toggle-mode-line)
   (add-to-list 'exec-path "~/.babun/cygwin/bin")
   ;; (add-to-list 'exec-path "/usr/bin")
+  ;; (add-to-list 'exec-path "~/AppData/Local/Programs/Git/cmd/git.exe")
+  ;; (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
+  ;; (add-to-list 'exec-path "~/msys64/usr/bin/autoconf")
+  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
   (add-to-list 'projectile-project-root-files "index.html")
   (add-to-list 'projectile-project-root-files ".pde")
+                                        ;a; (standard-display-ascii ?\225 [?+])
+
 
   (set-default-coding-systems 'utf-8-unix)
   (defalias 'ag 'ag.exe)
@@ -156,6 +167,8 @@ values."
                 ;; evil-normal-state-cursor "#c0c5ce"
                 evil-search-module 'evil-search
 
+                org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+                org-default-notes-file "~/src/notes/organiser.org"
                 scroll-margin 5
                 org-bullets-bullet-list '("■" "◆" "▲" "▶")
                 neo-theme 'nerd
@@ -163,6 +176,7 @@ values."
                 yas-snippet-dirs '("~/.spacemacs.d/snippets")
                 dired-listing-switches "-Al --si --time-style long-iso -t"
                 )
+
   )
 
 (defun scroll-to-center-advice (&rest args)
@@ -184,10 +198,6 @@ values."
 
   (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
-
-  (global-set-key (kbd "M-`") (lambda ()
-                                (interactive)
-                                (find-file "~/src/notes/weekly-goals.org")))
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
@@ -216,6 +226,7 @@ values."
   (evil-add-command-properties #'goto-last-change :jump t)
 
   (evilified-state-evilify skewer-error-mode skewer-error-mode-map
+
     (kbd "q") 'quit-window)
 
   (spaceline-compile)
@@ -382,9 +393,10 @@ This function is called at the very end of Spacemacs initialization."
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
+ '(org-agenda-files (quote ("~/src/notes/organiser.org")))
  '(package-selected-packages
    (quote
-    (org-category-capture gntp skewer-mode simple-httpd json-snatcher json-reformat haml-mode gitignore-mode fuzzy web-completion-data dash-functional tern inflections edn multiple-cursors peg queue pythonic auto-complete smooth-scrolling pdf-tools tablist golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (rainbow-mode w3m org-category-capture gntp skewer-mode simple-httpd json-snatcher json-reformat haml-mode gitignore-mode fuzzy web-completion-data dash-functional tern inflections edn multiple-cursors peg queue pythonic auto-complete smooth-scrolling pdf-tools tablist golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
@@ -431,4 +443,6 @@ This function is called at the very end of Spacemacs initialization."
  '(font-lock-variable-name-face ((t (:foreground "#dfe1e8"))))
  '(js2-external-variable ((t (:foreground "#dfe1e8"))))
  '(js2-function-param ((t (:foreground "#dfe1e8"))))
+ '(org-scheduled-today ((t (:foreground "slate gray"))))
+ '(org-time-grid ((t (:foreground "indian red"))))
  '(spaceline-all-the-icons-sunset-face ((t (:inherit powerline-active2 :foreground "#fe7714" :height 1.4 :family " Source Code Pro")))))

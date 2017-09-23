@@ -1,5 +1,8 @@
-(load-file "clj-comment.el")
-(load-file "processing.el")
+(defun layer-dir (file)
+  (concat "~/.spacemacs.d/layers/dev/" file))
+
+(load-file (layer-dir "quick-shift.el"))
+(load-file (layer-dir "processing.el"))
 
 (defmacro comment (&rest body)
   "Comment out one or more s-expressions."
@@ -8,17 +11,25 @@
 (defun dev/to-unix-file ()
   (interactive)
   (set-buffer-file-coding-system 'utf-8-unix)
-  (query-replace "" " "))
+  (query-replace "" ""))
 
-(defun dev-powershell-command (command)
-  (shell-command-to-string (concat "c:/windows/system32/WindowsPowerShell/v1.0/powershell.exe " command)))
+(defun dev/w3m (url)
+  (with-output-to-temp-buffer "*w3m-output*"
+    (shell-command (format "~/msys64/usr/bin/w3m.exe %s -S -cols 220" url) standard-output))
+  )
+
+(defun w3m-ddg (query-str)
+  (dev/w3m (format "https://duckduckgo.com/?q=%s" query-str)))
+
+(defun w3m-reddit (query)
+  (w3m-ddg (concat "site:reddit.com " query)))
 
 (defun dev/open-in-explorer ()
   ;; same as mac open .
   ;; for other methods check ao
   ;; http://stackoverflow.com/questions/320509/is-it-possible-to-open-an-explorer-window-from-powershell
   (interactive)
-  (dev-powershell-command (concat "Invoke-Item " default-directory)))
+  (shell-command (concat "Invoke-Item " default-directory)))
 
 ;; configuration-layer/package-usedp
 
@@ -37,3 +48,10 @@
      (define-key map (kbd "<left>") #'previous-buffer)
      (define-key map (kbd "<right>") #'next-buffer)
      map)))
+
+
+(defun dev/agenda-buffer-format ()
+  (general-simulate-keys "wdWj" nil "agenda buffer line format" dev/agenda-format-line)
+  (forward-line 2)
+  (dev/agenda-format-line)
+  )
