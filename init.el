@@ -19,6 +19,8 @@ values."
                   ;; df-tools
                   (shell :variables shell-default-shell 'eshell)
                   emacs-lisp
+                  (elfeed :variables
+                          elfeed-feeds '(("https://blog.sakugabooru.com/feed/" sakugabooru)))
                   racket
                   python
                   javascript
@@ -99,9 +101,6 @@ values."
   (desktop-save-mode 1)
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
-  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
-  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
-  (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
   ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
 
@@ -112,9 +111,13 @@ values."
   ;; (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
   ;; (add-to-list 'exec-path "~/msys64/usr/bin/autoconf")
   (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
-  (add-to-list 'projectile-project-root-files "index.html")
-  (add-to-list 'projectile-project-root-files ".pde")
-                                        ;a; (standard-display-ascii ?\225 [?+])
+  ;; (add-to-list 'exec-path "~/msys64/mingw64/bin/libxml2-2.dll")
+
+
+  ;; add to packages.el
+  ;;  (add-to-list 'projectile-project-root-files "index.html")
+  ;;  (add-to-list 'projectile-project-root-files ".pde")
+  ;;                                     ;a; (standard-display-ascii ?\225 [?+])
 
 
   (set-default-coding-systems 'utf-8-unix)
@@ -191,6 +194,10 @@ values."
   (golden-ratio-mode t)
   (helm-autoresize-mode t)
   (helm-autoresize-mode 1)
+
+  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
+  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
+  ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (setq-default  powerline-default-separator nil
                  ranger-show-literal t
                  ranger-width-preview 0.55
@@ -198,6 +205,7 @@ values."
 
   (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
+
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
@@ -396,7 +404,7 @@ This function is called at the very end of Spacemacs initialization."
  '(org-agenda-files (quote ("~/src/notes/organiser.org")))
  '(package-selected-packages
    (quote
-    (rainbow-mode w3m org-category-capture gntp skewer-mode simple-httpd json-snatcher json-reformat haml-mode gitignore-mode fuzzy web-completion-data dash-functional tern inflections edn multiple-cursors peg queue pythonic auto-complete smooth-scrolling pdf-tools tablist golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+    (elfeed-web elfeed-org elfeed-goodies ace-jump-mode noflet elfeed rainbow-mode w3m org-category-capture gntp skewer-mode simple-httpd json-snatcher json-reformat haml-mode gitignore-mode fuzzy web-completion-data dash-functional tern inflections edn multiple-cursors peg queue pythonic auto-complete smooth-scrolling pdf-tools tablist golden-ratio-scroll-screen avy-zap key-seq key-chord counsel swiper-helm all-the-icons-ivy vertigo ztree spaceline-all-the-icons all-the-icons-dired all-the-icons font-lock+ delight indium sourcemap memoize websocket lispyville lispy zoutline swiper ivy xref-js2 general org org-plus-contrib projectile diminish cider seq clojure-mode packed anaconda-mode company paredit avy smartparens magit magit-popup git-commit with-editor evil yasnippet helm helm-core markdown-mode async alert log4e hydra f js2-mode dash s racket-mode faceup yapfify xterm-color ws-butler window-numbering which-key web-mode web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org tagedit sublime-themes spacemacs-theme spaceline smeargle slim-mode skeletor shell-pop scss-mode sass-mode restart-emacs ranger rainbow-delimiters quelpa pyvenv pytest pyenv-mode py-isort pug-mode processing-mode popwin pip-requirements persp-mode pcre2el paradox orgit org-projectile org-present org-pomodoro org-download org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc magit-gitflow macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint less-css-mode keyfreq json-mode js2-refactor js-doc info+ indent-guide ido-vertical-mode ibuffer-projectile hy-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-css-scss helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gnuplot gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-easymotion evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emmet-mode elisp-slime-nav dumb-jump define-word cython-mode company-web company-tern company-statistics company-anaconda column-enforce-mode coffee-mode clojure-snippets clj-refactor clean-aindent-mode cider-eval-sexp-fu base16-theme auto-yasnippet auto-highlight-symbol auto-compile annoying-arrows-mode aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
  '(paradox-github-token t)
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")

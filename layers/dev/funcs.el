@@ -14,15 +14,22 @@
   (query-replace "" ""))
 
 (defun dev/w3m (url)
+  (interactive)
   (with-output-to-temp-buffer "*w3m-output*"
-    (shell-command (format "~/msys64/usr/bin/w3m.exe %s -S -cols 220" url) standard-output))
+    (shell-command (format "c:/Users/stephen/msys64/usr/bin/w3m.exe %s -S -cols 40" url) standard-output)
+    )
+  ;; (switch-to-buffer "*w3m-output*")
   )
+
 
 (defun w3m-ddg (query-str)
   (dev/w3m (format "https://duckduckgo.com/?q=%s" query-str)))
 
 (defun w3m-reddit (query)
   (w3m-ddg (concat "site:reddit.com " query)))
+
+(defun dev/pacman ()
+  (shell-command (format "~/msys64/usr/bin/pacman.exe %s")))
 
 (defun dev/open-in-explorer ()
   ;; same as mac open .
@@ -32,6 +39,7 @@
   (shell-command (concat "Invoke-Item " default-directory)))
 
 ;; configuration-layer/package-usedp
+
 
 (fset 'dev/plus-eol-semi-colon [?\C-o ?$ ?\; escape])
 (fset 'dev/plus-comma-next-arg [?\C-o ?a ?\,])
