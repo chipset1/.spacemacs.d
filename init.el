@@ -8,11 +8,10 @@ values."
   (setq-default dotspacemacs-distribution 'spacemacs
                 dotspacemacs-elpa-https nil
                 dotspacemacs-startup-banner 'nil
-                ;; dotspacemacs-smart-closing-parenthesis
+                dotspacemacs-smart-closing-parenthesis t
                 dotspacemacs-configuration-layer-path '("~/.spacemacs.d/layers")
                 dotspacemacs-configuration-layers
-                '(
-                  (auto-completion :variables
+                '((auto-completion :variables
                                    auto-completion-return-key-behavior 'complete
                                    auto-completion-tab-key-behavior 'complete
                                    auto-completion-enable-snippets-in-popup t)
@@ -36,8 +35,7 @@ values."
                   (ranger :variables
                           ranger-preview-file t)
                   dev
-                  online-thesaurus
-                  )
+                  online-thesaurus)
 
                 dotspacemacs-additional-packages '(base16-theme
                                                    ;; atom-dark-theme
@@ -101,34 +99,31 @@ values."
                 ;; Not used for now. (default nil)
                 dotspacemacs-default-package-repository nil))
 
+(defun old-windows-init ()
+  ;;magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
+  (add-to-list 'exec-path "~/.babun/cygwin/bin")
+  (add-to-list 'exec-path "/usr/bin")
+  (add-to-list 'exec-path "~/AppData/Local/Programs/Git/cmd/git.exe")
+  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
+  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
+  (add-to-list 'exec-path "~/msys64/mingw64/bin/libxml2-2.dll")
+  (defalias 'ag 'ag.exe)
+  (defalias 'python 'python2.7.exe))
+
 
 (defun dotspacemacs/user-init ()
   (desktop-save-mode 1)
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
+
+  (add-to-list 'projectile-project-root-files "index.html")
+  (add-to-list 'projectile-project-root-files ".pde")
+
   ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
 
 
-  ;; (spacemacs/toggle-mode-line)
-  ;; (add-to-list 'exec-path "~/.babun/cygwin/bin")
-  ;; (add-to-list 'exec-path "/usr/bin")
-  ;; (add-to-list 'exec-path "~/AppData/Local/Programs/Git/cmd/git.exe")
-  ;; (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
-  ;; (add-to-list 'exec-path "~/msys64/usr/bin/autoconf")
-  ;;  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
-  ;; (add-to-list 'exec-path "~/msys64/mingw64/bin/libxml2-2.dll")
-
-
-  ;; add to packages.el
-  ;; (add-to-list 'projectile-project-root-files "index.html")
-  ;; (add-to-list 'projectile-project-root-files ".pde")
-  ;;                                     ;a; (standard-display-ascii ?\225 [?+])
-
-
   (set-default-coding-systems 'utf-8-unix)
-  ;; (defalias 'ag 'ag.exe)
-  ;; (defalias 'python 'python2.7.exe)
   (defalias 'ff 'find-file-other-window)
 
   ;; blue
@@ -141,53 +136,48 @@ values."
 
   ;; white / grey
   ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
-  ;; windows and linux conditionals
-  (setq-default ;;magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
-   js2-basic-offset 2
+  (setq-default js2-basic-offset 2
 
-   dumb-jump-prefer-searcher 'ag
-   helm-ag-ignore-buffer-patterns '("/lib/" ".log")
-   ivy-height 20
+                dumb-jump-prefer-searcher 'ag
+                helm-ag-ignore-buffer-patterns '("/lib/" ".log")
+                ivy-height 20
 
-   ;; to stop ag crashing emacs
-   helm-input-idle-delay 0.1
-   helm-cycle-resume-delay 2
-   helm-follow-input-idle-delay 1
+                ;; to stop ag crashing emacs (might not need this now)
+                helm-input-idle-delay 0.1
+                helm-cycle-resume-delay 2
+                helm-follow-input-idle-delay 1
 
-   helm-semantic-fuzzy-match t
-   helm-buffers-fuzzy-matching t
-   helm-recentf-fuzzy-match    t
-   helm-imenu-fuzzy-match t
-   helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
+                helm-semantic-fuzzy-match t
+                helm-buffers-fuzzy-matching t
+                helm-recentf-fuzzy-match    t
+                helm-imenu-fuzzy-match t
+                helm-M-x-fuzzy-match t ;; optional fuzzy matching for helm-M-x
 
-   helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
-   helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
-   helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
-   ;; helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
-   ;; helm-ff-file-name-history-use-recentf t
-   helm-echo-input-in-header-line t
+                helm-split-window-in-side-p           t ; open helm buffer inside current window, not occupy whole other window
+                helm-move-to-line-cycle-in-source     t ; move to end or beginning of source when reaching top or bottom of source.
+                helm-ff-search-library-in-sexp        t ; search for library in `require' and `declare-function' sexp.
+                ;; helm-scroll-amount                    8 ; scroll 8 lines other window using M-<next>/M-<prior>
+                ;; helm-ff-file-name-history-use-recentf t
+                helm-echo-input-in-header-line t
 
-   ;;                projectile-indexing-method 'alien ;; speed up indexing on windows
+                ;;projectile-indexing-method 'alien ;; speed up indexing on windows
 
-   powerline-default-separator nil
+                powerline-default-separator nil
 
-   require-final-newline nil
-   mode-require-final-newline nil
-   default-buffer-file-coding-system 'utf-8-unix
-   evil-normal-state-cursor "#c0c5ce"
-   evil-search-module 'evil-search
+                require-final-newline nil
+                mode-require-final-newline nil
+                default-buffer-file-coding-system 'utf-8-unix
+                evil-normal-state-cursor "#c0c5ce"
+                evil-search-module 'evil-search
 
-   org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
-   org-default-notes-file "~/src/notes/organiser.org"
-   scroll-margin 5
-   org-bullets-bullet-list '("■" "◆" "▲" "▶")
-   neo-theme 'nerd
+                org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+                org-default-notes-file "~/src/notes/organiser.org"
+                scroll-margin 5
+                org-bullets-bullet-list '("■" "◆" "▲" "▶")
+                neo-theme 'nerd
 
-   yas-snippet-dirs '("~/.spacemacs.d/snippets")
-   dired-listing-switches "-Al --si --time-style long-iso -t"
-   )
-
-  )
+                yas-snippet-dirs '("~/.spacemacs.d/snippets")
+                dired-listing-switches "-Al --si --time-style long-iso -t"))
 
 (defun scroll-to-center-advice (&rest args)
   (evil-scroll-line-to-center (line-number-at-pos)))
@@ -198,9 +188,8 @@ values."
 (defun dotspacemacs/user-config ()
   " layers configuration. You are free to put any user code."
   ;; (setq ranger-width-preview 0.9)
-  (golden-ratio-mode t)
+  ;; (golden-ratio-mode t)
   (helm-autoresize-mode t)
-  (helm-autoresize-mode 1)
 
   (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
   (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
@@ -226,7 +215,7 @@ values."
                                          (save-buffer))
                                        nil
                                        'make-it-local)))
-  ;; add to b
+
   (advice-add 'previous-buffer :after #'dev/switch-to-buffer-continue)
   (advice-add 'next-buffer :after #'dev/switch-to-buffer-continue)
   (advice-add 'last-buffer :after #'dev/switch-to-buffer-continue)
@@ -244,7 +233,7 @@ values."
 
     (kbd "q") 'quit-window)
 
-  (spaceline-compile)
+  ;; (spaceline-compile)
   ;; (spacemacs/load-theme 'base16-ocean)
   )
 
