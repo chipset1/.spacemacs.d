@@ -54,7 +54,7 @@
 
 (general-define-key :states '(normal)
                     :keymaps 'lispy-mode-map
-                    "Y" (general-simulate-keys "ya("))
+                    "Y" (general-simulate-key "ya("))
 
 (general-define-key :states '(normal insert)
                     "M-)" 'evil-lisp-state-sp-forward-slurp-sexp
