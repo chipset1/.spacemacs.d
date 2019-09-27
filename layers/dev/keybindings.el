@@ -13,9 +13,6 @@
                     (evil-execute-macro 1 "@q"))
               "s" 'evil-avy-goto-char-2
               "gl" 'evil-avy-goto-line
-              "gs" 'magit-status
-              "[j" 'vertigo-jump-down
-              "[k" 'vertigo-jump-up
               "gj" 'spacemacs/helm-jump-in-buffer
               "gf" 'helm-find-files
               "C-f" 'anzu-query-replace
@@ -43,7 +40,6 @@
 
 (general-define-key :states '(normal insert)
                     "M-)" 'evil-lisp-state-sp-forward-slurp-sexp
-                    "C-s" 'save-buffer
                     "M-(" 'evil-lisp-state-wrap)
 
 (general-define-key :states '(normal visual operator)
