@@ -1,20 +1,5 @@
 (general-evil-setup)
-
-
 ;; durp windows http://emacs.stackexchange.com/questions/30275/c-not-recognized-on-windows-10
-
-;; (general-define-key
-;;  :states '(normal insert emacs)
-;;  :prefix "C-SPC"
-;;  :non-normal-prefix "C-SPC"
-;;  "l" '(avy-goto-line)
-;;  "a" 'align-regexp
-;;  "f" (lambda ()
-;;        (let ((helm-ag--buffer-search t))
-;;          (helm-ag1 (format "export.+%s" (word-at-point)))
-;;          )
-;;        )
-;;  )
 
 (global-set-key (kbd "M-`") (lambda ()
                               (interactive)
