@@ -27,8 +27,7 @@
 (general-omap "ip" 'evil-inner-paren    ;; was evil-paste?
               "ap" 'evil-a-paren        ;; evil paragraph
               "ik" 'evil-inner-curly
-              "ak" 'evil-a-curly
-              )
+              "ak" 'evil-a-curly)
 
 (general-define-key :states '(normal insert)
                     :keymaps 'lispy-mode-map
