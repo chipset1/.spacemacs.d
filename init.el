@@ -201,7 +201,8 @@ values."
   (setq-default  powerline-default-separator nil
                  ranger-show-literal t
                  ranger-width-preview 0.55
-                 reb-re-syntax 'rx)
+                 reb-re-syntax 'rx
+                 projectile-indexing-method 'native)
 
   (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
