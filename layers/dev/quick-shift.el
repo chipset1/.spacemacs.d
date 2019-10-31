@@ -1,3 +1,10 @@
+;;WIP package to quickly move between buffers as you would with tabs
+;;
+;; The idea is you define your buffers you want to switch to and its key
+;; eg "SPC-1" "*Messages*"
+;; This would be done in a pop up window, a key binding or in your config
+;; Once defined you can switch to that buffer using SPC-1
+;;
 
 (defvar quick-shift--project-buffers nil)
 
