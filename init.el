@@ -57,15 +57,15 @@ values."
                 dotspacemacs-startup-banner 'official
                 ;; dotspacemacs-distinguish-gui-tab t
                 dotspacemacs-startup-lists '(recents bookmarks)
-                dotspacemacs-default-theme 'spacemacs-dark
-                dotspacemacs-themes '(spacemacs-dark base16-ocean)
+                dotspacemacs-default-theme 'base16-ocean
+                dotspacemacs-themes '(base16-ocean spacemacs-dark)
                 dotspacemacs-colorize-cursor-according-to-state t
                 dotspacemacs-mode-line-unicode-symbols nil
                 dotspacemacs-default-font '("Source Code Pro" ;;"Anonymous Pro for Powerline"
                                             :size 18
                                             :weight normal
                                             :width normal
-                                            :powerline-scale 1.5)
+                                            :powerline-scale 1.0)
                 dotspacemacs-leader-key "SPC"
                 dotspacemacs-emacs-leader-key "M-m"
                 dotspacemacs-major-mode-leader-key ","
