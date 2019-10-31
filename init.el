@@ -164,7 +164,8 @@ values."
                 neo-theme 'nerd
 
                 yas-snippet-dirs '("~/.spacemacs.d/snippets")
-                dired-listing-switches "-Al --si --time-style long-iso -t"))
+                dired-listing-switches "-Al --si --time-style long-iso -t"
+                delete-by-moving-to-trash t))
 
 (defun scroll-to-center-advice (&rest args)
   (evil-scroll-line-to-center (line-number-at-pos)))
