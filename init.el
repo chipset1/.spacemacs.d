@@ -20,7 +20,6 @@ values."
                   org
                   (c-c++ :variables
                          c-c++-default-mode-for-headers 'c++-mode)
-                  ;; df-tools
                   (shell :variables shell-default-shell 'eshell)
                   emacs-lisp
                   (elfeed :variables
@@ -40,10 +39,8 @@ values."
                   online-thesaurus)
 
                 dotspacemacs-additional-packages '(base16-theme
-                                                   ;; atom-dark-theme
                                                    sublime-themes)
                 dotspacemacs-excluded-packages '()
-                ;; dotspacemacs-configuration-layers dev--layers
                 dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
