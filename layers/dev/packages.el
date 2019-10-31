@@ -225,11 +225,10 @@
     :defer t
     :config
     (progn
-      (setq-default processing-location "~/processing-3.0b6/processing-java.exe"
-                    processing-application-dir "~/processing-3.0b6"
+      (setq-default processing-location "C:/ProgramData/chocolatey/lib/Processing/tools/processing-3.5.3/processing-java.exe"
+                    processing-application-dir "C:/ProgramData/chocolatey/lib/Processing/tools/processing-3.5.3/"
                     processing-sketchbook-dir "~/src/processing")
 
-      (add-to-list 'load-path "~/processing-3.0b6")
       (autoload 'processing-mode "processing-mode" "Processing mode" t)
       (add-to-list 'auto-mode-alist '("\\.pde$" . processing-mode)))))
 
