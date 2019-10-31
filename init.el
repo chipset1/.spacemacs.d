@@ -94,7 +94,7 @@ values."
                 dotspacemacs-smartparens-strict-mode t
                 dotspacemacs-highlight-delimiters 'all
                 dotspacemacs-persistent-server nil
-                dotspacemacs-search-tools '("ag" "grep")
+                dotspacemacs-search-tools '("ag")
                 ;; The default package repository used if no explicit repository has been
                 ;; specified with an installed package.
                 ;; Not used for now. (default nil)
