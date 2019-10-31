@@ -6,7 +6,7 @@
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default dotspacemacs-distribution 'spacemacs
-                ;; dotspacemacs-check-for-update t
+                dotspacemacs-check-for-update t
                 dotspacemacs-elpa-https nil
                 dotspacemacs-startup-banner 'nil
                 dotspacemacs-smart-closing-parenthesis t
