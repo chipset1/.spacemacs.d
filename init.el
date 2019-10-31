@@ -126,7 +126,7 @@ values."
   (setq-default js2-basic-offset 2
 
                 dumb-jump-prefer-searcher 'ag
-                helm-ag-ignore-buffer-patterns '("/lib/" ".log")
+                helm-ag-ignore-buffer-patterns '("/lib/" ".log" "/node_modules/")
                 ivy-height 20
 
                 ;; to stop ag crashing emacs (might not need this now)
