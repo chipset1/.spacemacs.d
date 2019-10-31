@@ -23,12 +23,14 @@ values."
                   (shell :variables shell-default-shell 'eshell)
                   emacs-lisp
                   (elfeed :variables
-                          elfeed-feeds '(("https://blog.sakugabooru.com/feed/" sakugabooru)))
+                          elfeed-feeds '(("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
+                                         ("http://feeds.cognitect.com/blog/feed.rss" clojure)
+                                         ("https://blog.sakugabooru.com/feed/" sakugabooru)))
                   racket
                   python
                   javascript
                   (clojure :variables
-                           clojure-enable-fancify-symbols t)
+                           clojure-enable-fancify-symbols nil)
                   markdown
                   html
                   git
