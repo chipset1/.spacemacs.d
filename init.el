@@ -148,7 +148,7 @@ values."
                 helm-echo-input-in-header-line t
 
                 ;;projectile-indexing-method 'alien ;; speed up indexing on windows
-
+                projectile-project-search-path '("~/src/")
                 powerline-default-separator nil
 
                 require-final-newline nil
