@@ -3,25 +3,16 @@
 # key: template2
 # --
 import p5 from "p5";
-import {times} from "lodash";
-
-import {clog} from "core";
 import * as Util from "p5-util";
 
 var debugText = Util.textStackFn(20, 40, 20);
 
 window.setup = function(){
-    createCanvas(1248, 720);
+    createCanvas(624, 360);
 };
 
 window.draw = function(){
     background(0);
     debugText("frameRate", int(frameRate()));
     $0
-};
-
-window.keyPressed = function(){
-    if(key.toLowerCase() === "r") {
-        window.location.reload(true);
-    }
 };
