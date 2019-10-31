@@ -101,18 +101,6 @@ values."
                 ;; Not used for now. (default nil)
                 dotspacemacs-default-package-repository nil))
 
-(defun old-windows-init ()
-  ;;magit-git-executable "~/AppData/Local/Programs/Git/cmd/git.exe"
-  (add-to-list 'exec-path "~/.babun/cygwin/bin")
-  (add-to-list 'exec-path "/usr/bin")
-  (add-to-list 'exec-path "~/AppData/Local/Programs/Git/cmd/git.exe")
-  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
-  (add-to-list 'exec-path "~/msys64/usr/bin/w3m.exe")
-  (add-to-list 'exec-path "~/msys64/mingw64/bin/libxml2-2.dll")
-  (defalias 'ag 'ag.exe)
-  (defalias 'python 'python2.7.exe))
-
-
 (defun dotspacemacs/user-init ()
   (desktop-save-mode 1)
   (set-fringe-mode 0)
