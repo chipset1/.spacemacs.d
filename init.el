@@ -105,12 +105,10 @@ values."
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
-
-  (add-to-list 'projectile-project-root-files "index.html")
-  (add-to-list 'projectile-project-root-files ".pde")
+  ;; (add-to-list 'projectile-project-root-files ".pde") ;; TODO: figure out if this works
+  (defalias 'ag 'ag.exe)
 
   ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
-
 
   (set-default-coding-systems 'utf-8-unix)
   (defalias 'ff 'find-file-other-window)
