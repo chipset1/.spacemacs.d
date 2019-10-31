@@ -196,6 +196,7 @@ values."
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+  (add-hook 'clojure-mode-hook #'evil-lispy-mode)
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'js2-mode-hook (lambda ()
