@@ -30,26 +30,28 @@
 
 (setq dev-packages
       '(evil-easymotion
-        vertigo
         lispy
         rainbow-mode
         lispyville
-        ;; evil-mc
         anzu
         keyfreq
         general
         key-chord
-        ;; delight
         golden-ratio-scroll-screen
-        spaceline-all-the-icons
-        all-the-icons
-        all-the-icons-ivy
-        all-the-icons-dired
-        all-the-icons-ivy
         skeletor
         processing-mode
         indium
-        xref-js2))
+        xref-js2
+        glsl-mode))
+
+(defun dev/init-glsl-mode ()
+  (use-package glsl-mode
+    :defer t
+    :config (progn (autoload 'glsl-mode "glsl-mode" nil t)
+                   (add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+                   (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+                   (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+                   (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode)))))
 
 (defun dev/init-rainbow-mode ()
   (use-package rainbow-mode
@@ -57,9 +59,6 @@
     :config (progn (add-hook 'html-mode-hook 'rainbow-mode)
                    (add-hook 'js2-mode-hook 'rainbow-mode)
                    (add-hook 'css-mode-hook 'rainbow-mode))))
-
-(defun dev/init-vertigo ()
-  )
 
 (defun dev/init-xref-js2 ()
   (use-package xref-js2
@@ -123,23 +122,6 @@
               (spaceline-toggle-all-the-icons-buffer-size-off)
               (spaceline-all-the-icons-theme)
               )))
-
-(defun dev/init-all-the-icons ()
-  (use-package all-the-icons
-    :defer t))
-
-(defun dev/init-all-the-icons-ivy ()
-  (use-package all-the-icons
-    :defer t
-    :config (all-the-icons-ivy-setup)))
-
-
-(defun dev/init-all-the-icons-dired ()
-  (use-package all-the-icons-dired
-    :defer t
-    :config (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
-    ))
-
 
 ;; (defun dev/init-delight ()
 ;;   (use-package delight
