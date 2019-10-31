@@ -51,11 +51,12 @@
 (defun parse-html ()
   (let (start end)
     (goto-char (point-min))
-    (search-forward-regexp "id=\"content\"")
+    (search-forward-regexp "id=\"root\"")
     (setq start (point))
     (sgml-skip-tag-forward 1)
     (setq end (point))
     (libxml-parse-html-region start end nil t)))
+
 
 (defun thesaurus ()
   (interactive)
@@ -63,23 +64,51 @@
   (url-retrieve (format query-url synonym-lookup)
                 (lambda (status)
                   (let (dom-data heading-pairs)
+
+                    ;; (popwin:create-popup-window 15 'right t)
                     (popwin:popup-buffer-tail (current-buffer))
+                    ;; (popwin:create-popup-window 15 'right t)
                     ;; (switch-to-buffer (current-buffer))
                     ;; (popwin:pop-to-buffer (current-buffer))
                     (setq dom-data (parse-html))
-                    (setq heading-pairs (heading-data dom-data))
+                    (setq heading-pairs (dom-by-class dom-data "MainContentContainer"))
+
                     (erase-buffer)
                     (insert (propertize synonym-lookup
                                         'face
                                         '(:foreground "#b48ead" :weight bold)))
+
                     ;; (message "%s" (mapcar (lambda (dom)
                     ;;                         (json-read-from-string (dom-attr dom 'data-category)))
                     ;;                       (dom-by-tag (dom-by-id dom-data
                     ;;                                              (format "synonyms-%s" 1))
-                    ;;                                   'a)))
-                    (dotimes (n (length heading-pairs))
+                    ;;                                  'a)))
+                    ;; format
+                    ;; (insert (dom-texts ))
+
+                    ;; (insert
+                    ;;  "\n" (split-string (dom-texts heading-pairs)))
+
+                    ;; (insert "\n")
+                    (insert (dom-pp heading-pairs))
+                    (dotimes (n (length (split-string (dom-texts heading-pairs))))
                       ;; TODO: sort this properly
-                      (format-text (nth n heading-pairs)
-                                   (all-text (relevancy-list (dom-by-id dom-data
-                                                                        (format "synonyms-%s" n))))))
+                      ;; (format-text (nth n heading-pairs)
+                      ;;              (all-text (relevancy-list (dom-by-id dom-data
+                      ;;                                                   (format "synonyms-%s" n)))))
+
+                      ;; (if (< n 3)
+                      ;;     (comment (insert " " (nth n (split-string (dom-texts heading-pairs)))))
+                      ;;   )
+                      ;; (insert "\n" (nth n (split-string (dom-texts heading-pairs))))
+                      ;; (insert (dom-texts (nth 1 heading-pairs)) )
+                      )
+                    (comment (dotimes (n (length heading-pairs))
+                               ;; TODO: sort this properly
+                               ;; (format-text (nth n heading-pairs)
+                               ;;              (all-text (relevancy-list (dom-by-id dom-data
+                               ;;                                                   (format "synonyms-%s" n)))))
+
+                               (insert (dom-texts (nth 1 heading-pairs)) )
+                               ))
                     (goto-char (point-min))))))

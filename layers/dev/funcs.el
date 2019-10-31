@@ -3,6 +3,7 @@
 
 (load-file (layer-dir "quick-shift.el"))
 (load-file (layer-dir "processing.el"))
+(load-file (layer-dir "online-thesaurus.el"))
 
 (defmacro comment (&rest body)
   "Comment out one or more s-expressions."
