@@ -37,8 +37,7 @@ values."
                   ibuffer
                   (ranger :variables
                           ranger-preview-file t)
-                  dev
-                  online-thesaurus)
+                  dev)
 
                 dotspacemacs-additional-packages '(base16-theme
                                                    sublime-themes)
