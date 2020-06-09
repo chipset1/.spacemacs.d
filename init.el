@@ -33,7 +33,8 @@ values."
                            clojure-enable-fancify-symbols nil)
                   markdown
                   html
-                  git
+                  (git :variables
+                       git-magit-status-fullscreen t)
                   ibuffer
                   (ranger :variables
                           ranger-preview-file t)
