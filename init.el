@@ -176,7 +176,7 @@ values."
 (defun dotspacemacs/user-config ()
   " layers configuration. You are free to put any user code."
   ;; (setq ranger-width-preview 0.9)
-  ;; (golden-ratio-mode t)
+  (golden-ratio-mode t)
   (helm-autoresize-mode t)
 
   ;; TODO fix this. this messes up startup
