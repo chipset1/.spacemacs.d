@@ -23,7 +23,9 @@ values."
                   (shell :variables shell-default-shell 'eshell)
                   emacs-lisp
                   (elfeed :variables
-                          elfeed-feeds '(("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
+                          elfeed-feeds '(("https://gridbugs.org/feed.xml" gamedev)
+                                         ("http://gigasquidsoftware.com/atom.xml" clojure)
+                                         ("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
                                          ("http://feeds.cognitect.com/blog/feed.rss" clojure)
                                          ("https://blog.sakugabooru.com/feed/" sakugabooru)))
                   racket
