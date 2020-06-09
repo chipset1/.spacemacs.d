@@ -188,7 +188,7 @@ values."
                  ranger-show-literal t
                  ranger-width-preview 0.55
                  reb-re-syntax 'rx
-                 projectile-indexing-method 'native)
+                 projectile-indexing-method 'alien)
 
   (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
