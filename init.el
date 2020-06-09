@@ -108,6 +108,7 @@ values."
   ;; (add-to-list 'projectile-project-root-files ".pde") ;; TODO: figure out if this works
   (defalias 'ag 'ag.exe)
 
+  ;; (set-face-attribute 'default nil :height 140)
   ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
 
   (set-default-coding-systems 'utf-8-unix)
@@ -179,9 +180,10 @@ values."
   (golden-ratio-mode t)
   (helm-autoresize-mode t)
 
+  ;; (set-face-attribute 'default nil :height 130)
   ;; TODO fix this. this messes up startup
-  (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
-  (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
+  ;; (set-face-background 'helm-swoop-target-line-face "#8fa1b3")
+  ;; (set-face-background 'helm-swoop-target-word-face "#c0c5ce")
 
   ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (setq-default  powerline-default-separator nil
