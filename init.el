@@ -217,7 +217,7 @@ values."
   (advice-add #'spacemacs/jump-to-definition :after #'scroll-to-center-advice)
   (advice-add #'goto-last-change :after #'scroll-to-center-advice)
   (advice-add #'evil-goto-mark-line :after #'scroll-to-center-advice)
-  (advice-add #'evil-replace :after #'save-buffer-advice)
+  ;; (advice-add #'evil-replace :after #'save-buffer-advice)
   (evil-add-command-properties #'jump-to-definition :jump t)
   (evil-add-command-properties #'goto-last-change :jump t)
 
