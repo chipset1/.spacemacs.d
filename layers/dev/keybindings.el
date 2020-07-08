@@ -5,24 +5,26 @@
                               (interactive)
                               (find-file "~/src/notes/weekly-goals.org")))
 
-(general-nmap "(" 'sp-backward-up-sexp
-              "0" 'evil-first-non-blank
-              "-" 'deer
-              "Q" (lambda ()
-                    (interactive)
-                    (evil-execute-macro 1 "@q"))
-              "s" 'evil-avy-goto-char-2
-              "gl" 'evil-avy-goto-line
-              "gj" 'spacemacs/helm-jump-in-buffer
-              "gf" 'helm-find-files
-              "C-f" 'anzu-query-replace
-              ";" 'save-buffer
-              "C-=" 'evil-numbers/inc-at-pt
-              "C--" 'evil-numbers/dec-at-pnt
-              "C-l" 'dev/change-in-arg
-              "C-;" 'evilnc-comment-or-uncomment-lines
-              "U" 'undo-tree-redo
-              )
+(general-nmap
+  "(" 'sp-backward-up-sexp
+  ")" 'sp-end-of-sexp
+  "0" 'evil-first-non-blank
+  "-" 'deer
+  "Q" (lambda ()
+        (interactive)
+        (evil-execute-macro 1 "@q"))
+  "s" 'evil-avy-goto-char-2
+  "gl" 'evil-avy-goto-line
+  "gj" 'spacemacs/helm-jump-in-buffer
+  "gf" 'helm-find-files
+  ;; "C-f" 'anzu-query-replace
+  ";" 'save-buffer
+  "C-=" 'evil-numbers/inc-at-pt
+  "C--" 'evil-numbers/dec-at-pnt
+  "C-l" 'dev/change-in-arg
+  "C-;" 'evilnc-comment-or-uncomment-lines
+  "U" 'undo-tree-redo
+  "(" 'sp-backward-up-sexp)
 
 (general-omap "ip" 'evil-inner-paren    ;; was evil-paste?
               "ap" 'evil-a-paren        ;; evil paragraph
@@ -42,8 +44,8 @@
                     "M-(" 'evil-lisp-state-wrap)
 
 (general-define-key :states '(normal visual operator)
-                    "H" 'evil-backward-WORD-begin
-                    "L" 'evil-forward-WORD-begin
+                    ;; "H" 'evil-backward-WORD-begin
+                    ;; "L" 'evil-forward-WORD-begin
                     "C-k" 'golden-ratio-scroll-screen-down
                     "C-j" 'golden-ratio-scroll-screen-up)
 
