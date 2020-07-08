@@ -57,7 +57,6 @@
     (setq end (point))
     (libxml-parse-html-region start end nil t)))
 
-
 (defun thesaurus ()
   (interactive)
   (setq synonym-lookup (thing-at-point 'word))
@@ -89,8 +88,10 @@
                     ;; (insert
                     ;;  "\n" (split-string (dom-texts heading-pairs)))
 
-                    ;; (insert "\n")
-                    (insert (dom-pp heading-pairs))
+                    (insert "\n")
+                    (insert (dom-texts (dom-by-class heading-pairs "css-1lc0dpe")))
+                    ;; (insert (dom-pp heading-pairs))
+
                     (dotimes (n (length (split-string (dom-texts heading-pairs))))
                       ;; TODO: sort this properly
                       ;; (format-text (nth n heading-pairs)
