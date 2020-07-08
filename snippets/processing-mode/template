@@ -3,7 +3,7 @@
 # key: template
 # --
 void setup(){
-    size(512, 512);
+    size(500, 500);
 }
 
 void draw(){
