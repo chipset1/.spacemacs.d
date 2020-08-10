@@ -63,8 +63,6 @@
                              (evil-insert-state)))
 
 
-(define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
-
 (spacemacs/set-leader-keys-for-major-mode 'org-mode
   "r" 'org-mode-restart
   "os" 'org-timer-start

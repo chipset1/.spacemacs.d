@@ -200,6 +200,8 @@ values."
   (spacemacs/toggle-transparency)
 
 
+ (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
+
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
   (add-hook 'clojure-mode-hook #'evil-lispy-mode)
