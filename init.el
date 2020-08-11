@@ -116,6 +116,7 @@ values."
   ;; (add-hook 'org-agenda-finalize-hook dev/agenda-buffer-format)
 
   (set-default-coding-systems 'utf-8-unix)
+  (prefer-coding-system 'utf-8-unix)
   (defalias 'ff 'find-file-other-window)
 
   ;; blue
