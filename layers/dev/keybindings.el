@@ -3,7 +3,7 @@
 
 (global-set-key (kbd "M-`") (lambda ()
                               (interactive)
-                              (find-file "~/src/notes/weekly-goals.org")))
+                              (find-file "~/src/notes/plan.org")))
 
 (general-nmap
   "(" 'sp-backward-up-sexp
