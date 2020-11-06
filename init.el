@@ -44,6 +44,7 @@ values."
                   dev)
 
                 dotspacemacs-additional-packages '(base16-theme
+                                                   gnu-elpa-keyring-update
                                                    sublime-themes)
                 dotspacemacs-excluded-packages '()
                 dotspacemacs-delete-orphan-packages t))
@@ -129,7 +130,8 @@ values."
   ;; white / grey
   ;; (set-face-background 'spacemacs-normal-face "#c0c5ce")
   (setq-default js2-basic-offset 2
-
+                ;; https://emacs.stackexchange.com/questions/233/how-to-proceed-on-package-el-signature-check-failure
+                package-check-signature nil ;; 'allow-unsigned
                 dumb-jump-prefer-searcher 'ag
                 helm-ag-ignore-buffer-patterns '("/lib/" ".log" "/node_modules/")
                 ivy-height 20
