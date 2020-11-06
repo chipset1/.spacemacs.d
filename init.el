@@ -163,6 +163,7 @@ values."
                 default-buffer-file-coding-system 'utf-8-unix
                 evil-normal-state-cursor "#c0c5ce"
                 evil-search-module 'evil-search
+                evil-want-C-i-jump t
 
                 org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
                 org-default-notes-file "~/src/notes/organiser.org"
