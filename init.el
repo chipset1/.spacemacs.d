@@ -185,6 +185,7 @@ values."
   " layers configuration. You are free to put any user code."
   ;; (setq ranger-width-preview 0.9)
   (golden-ratio-mode t)
+  (global-company-mode)
   (helm-autoresize-mode t)
 
   ;; (set-face-attribute 'default nil :height 130)
