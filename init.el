@@ -200,15 +200,15 @@ values."
                  reb-re-syntax 'rx
                  projectile-indexing-method 'alien)
 
-  (spacemacs/toggle-truncate-lines-on)
+  ;; (spacemacs/toggle-truncate-lines-on)
   (spacemacs/toggle-transparency)
 
-
- (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
+  ;; find other way to do this since it overrides tab in insert mode
+  ;; (define-key yas-minor-mode-map (kbd "TAB") 'yas-expand)
 
   (add-hook 'clojure-mode-hook #'smartparens-strict-mode)
   (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
-  (add-hook 'clojure-mode-hook #'evil-lispy-mode)
+  ;; (add-hook 'clojure-mode-hook #'evil-lispy-mode)
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   (add-hook 'before-save-hook 'delete-trailing-whitespace)
   (add-hook 'js2-mode-hook (lambda ()
