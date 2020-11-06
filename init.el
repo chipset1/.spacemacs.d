@@ -7,15 +7,13 @@ You should not put any user code in this function besides modifying the variable
 values."
   (setq-default dotspacemacs-distribution 'spacemacs
                 dotspacemacs-check-for-update t
-                dotspacemacs-elpa-https nil
+                dotspacemacs-elpa-https t
                 dotspacemacs-startup-banner 'nil
                 dotspacemacs-smart-closing-parenthesis t
                 dotspacemacs-smartparens-strict-mode t
                 dotspacemacs-configuration-layer-path '("~/.spacemacs.d/layers")
                 dotspacemacs-configuration-layers
-                '((
-                   lua
-                   auto-completion :variables
+                '((auto-completion :variables
                                    auto-completion-return-key-behavior 'complete
                                    auto-completion-tab-key-behavior 'complete
                                    auto-completion-enable-snippets-in-popup t)
@@ -30,9 +28,10 @@ values."
                                          ("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
                                          ("http://feeds.cognitect.com/blog/feed.rss" clojure)
                                          ("https://blog.sakugabooru.com/feed/" sakugabooru)))
-                  racket
                   python
                   javascript
+                  lua
+                  csharp
                   (clojure :variables
                            clojure-enable-fancify-symbols nil)
                   markdown
