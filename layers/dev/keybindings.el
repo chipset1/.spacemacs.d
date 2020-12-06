@@ -114,6 +114,7 @@
   "oo" 'clojure-comment-uncomment
   "op" 'dev/helm-processing-find-sketch
   "oe" 'dev/open-in-explorer
+  "ob" 'frog-jump-buffer
 
   ;; "ou" 'comment-map
   ;; "of" 'comment-defn
@@ -125,9 +126,9 @@
 (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
   "ep" 'cider-pprint-eval-defun-at-point)
 
-(spacemacs/set-leader-keys-for-major-mode 'clojurescript-mode
-  "ec" (lambda ()
-         (interactive)
-         ;; (shell-command "lumo C:/Users/stephen/.spacemacs.d/layers/dev/w3m.cljs ")
-         (switch-to-buffer "*Shell Command Output*"))
-  )
+;; (spacemacs/set-leader-keys-for-major-mode 'clojurescript-mode
+;;   "ec" (lambda ()
+;;          (interactive)
+;;          ;; (shell-command "lumo C:/Users/stephen/.spacemacs.d/layers/dev/w3m.cljs ")
+;;          (switch-to-buffer "*Shell Command Output*"))
+;;   )
