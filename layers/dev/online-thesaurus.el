@@ -57,7 +57,31 @@
     (setq end (point))
     (libxml-parse-html-region start end nil t)))
 
-(defun thesaurus ()
+(defun online-thesaurus--format-buffer ()
+  ;; format the raw text
+  (evil-first-non-blank)
+  (search-forward "]")
+  (insert "\n")
+  (search-forward "Synonyms")
+  (evil-backward-word-begin)
+  (insert "\n")
+  ;; delete links to other synonym pages
+  (evil-previous-line)
+  (evil-delete-whole-line (point-at-bol) (point-at-eol))
+
+  (evil-forward-WORD-end 3)
+  (evil-forward-char)
+  (insert "\n")
+  (evil-forward-WORD-end 10)
+  (evil-forward-char)
+  (insert "\n")
+  (search-forward "TRY")
+  (evil-backward-word-begin)
+  (insert "\n")
+  (evil-delete-line (point-at-bol) (point-at-eol))
+  )
+
+(defun online-thesaurus-query ()
   (interactive)
   (setq synonym-lookup (thing-at-point 'word))
   (url-retrieve (format query-url synonym-lookup)
@@ -89,8 +113,9 @@
                     ;;  "\n" (split-string (dom-texts heading-pairs)))
 
                     (insert "\n")
-                    (insert (dom-texts (dom-by-class heading-pairs "css-1lc0dpe")))
-                    ;; (insert (dom-pp heading-pairs))
+                    ;; (insert (dom-texts (dom-by-class heading-pairs "css-1lc0dpe"))) creation
+                    (insert (dom-texts heading-pairs))
+                    (online-thesaurus--format-buffer)
 
                     (dotimes (n (length (split-string (dom-texts heading-pairs))))
                       ;; TODO: sort this properly
@@ -112,4 +137,5 @@
 
                                (insert (dom-texts (nth 1 heading-pairs)) )
                                ))
-                    (goto-char (point-min))))))
+                    ;; (goto-char (point-min))
+                    ))))

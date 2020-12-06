@@ -98,7 +98,7 @@
   ;;          (sp-up-sexp)
   ;;          (evil-visual-select start-point (+ 1 (point)))))
   "os" 'dev/to-unix-file
-  "ot" 'thesaurus
+  "ot" 'online-thesaurus-query
   "or" (lambda () "test"
          (interactive)
          (cond ((eq 'processing-mode major-mode)
