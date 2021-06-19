@@ -27,31 +27,36 @@
 
 ;;; Code:
 
-
 (setq dev-packages
       '(evil-easymotion
-        lispy
+        ;; lispy
         rainbow-mode
         lispyville
-        anzu
+        ;; anzu
         keyfreq
         general
         key-chord
         golden-ratio-scroll-screen
-        skeletor
+        ;; skeletor
         processing-mode
         indium
         xref-js2
-        glsl-mode))
+        ;; glsl-mode
+        ))
 
-(defun dev/init-glsl-mode ()
-  (use-package glsl-mode
-    :defer t
-    :config (progn (autoload 'glsl-mode "glsl-mode" nil t)
-                   (add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
-                   (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
-                   (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
-                   (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode)))))
+(defun dev/init-general ()
+  (use-package general
+    :defer t))
+
+
+;; (defun dev/init-glsl-mode ()
+;;   (use-package glsl-mode
+;;     :defer t
+;;     :config (progn (autoload 'glsl-mode "glsl-mode" nil t)
+;;                    (add-to-list 'auto-mode-alist '("\\.glsl\\'" . glsl-mode))
+;;                    (add-to-list 'auto-mode-alist '("\\.vert\\'" . glsl-mode))
+;;                    (add-to-list 'auto-mode-alist '("\\.frag\\'" . glsl-mode))
+;;                    (add-to-list 'auto-mode-alist '("\\.geom\\'" . glsl-mode)))))
 
 (defun dev/init-rainbow-mode ()
   (use-package rainbow-mode
@@ -101,27 +106,27 @@
     )
   )
 
-(defun dev/init-spaceline-all-the-icons ()
-  (use-package spaceline-all-the-icons
-    :defer t
-    :after spaceline
-    :config (progn
-              (setq-default spaceline-all-the-icons-separator-type 'none
-                            spaceline-all-the-icons-icon-set-modified 'toggle
-                            mode-line-format 'spaceline-all-the-icons)
+;; (defun dev/init-spaceline-all-the-icons ()
+;;   (use-package spaceline-all-the-icons
+;;     :defer t
+;;     :after spaceline
+;;     :config (progn
+;;               (setq-default spaceline-all-the-icons-separator-type 'none
+;;                             spaceline-all-the-icons-icon-set-modified 'toggle
+;;                             mode-line-format 'spaceline-all-the-icons)
 
-              (spaceline-toggle-all-the-icons-eyebrowse-workspace-off)
-              ;; (spaceline-toggle-all-the-icons-hud-off)
-              ;; (spaceline-toggle-all-the-icons-flycheck-status-info-off)
-              (spaceline-toggle-all-the-icons-minor-modes-off)
-              ;; (spaceline-toggle-all-the-icons-mode-icon-off)
-              (spaceline-toggle-all-the-icons-position-off)
-              (spaceline-toggle-all-the-icons-projectile-off)
-              (spaceline-toggle-all-the-icons-time-off)
-              (spaceline-toggle-all-the-icons-modified-off)
-              (spaceline-toggle-all-the-icons-buffer-size-off)
-              (spaceline-all-the-icons-theme)
-              )))
+;;               (spaceline-toggle-all-the-icons-eyebrowse-workspace-off)
+;;               ;; (spaceline-toggle-all-the-icons-hud-off)
+;;               ;; (spaceline-toggle-all-the-icons-flycheck-status-info-off)
+;;               (spaceline-toggle-all-the-icons-minor-modes-off)
+;;               ;; (spaceline-toggle-all-the-icons-mode-icon-off)
+;;               (spaceline-toggle-all-the-icons-position-off)
+;;               (spaceline-toggle-all-the-icons-projectile-off)
+;;               (spaceline-toggle-all-the-icons-time-off)
+;;               (spaceline-toggle-all-the-icons-modified-off)
+;;               (spaceline-toggle-all-the-icons-buffer-size-off)
+;;               (spaceline-all-the-icons-theme)
+;;               )))
 
 ;; (defun dev/init-delight ()
 ;;   (use-package delight
@@ -139,27 +144,27 @@
 ;;   )
 
 
-(defun dev/init-anzu ()
-  (use-package anzu
-    :defer t
-    :config (global-anzu-mode +1))
-  )
+;; (defun dev/init-anzu ()
+;;   (use-package anzu
+;;     :defer t
+;;     :config (global-anzu-mode +1))
+;;   )
 
 (defun dev/init-indium ()
   (use-package indium
     :defer t))
 
-(defun dev/init-lispy ()
-  (use-package lispy
-    :defer t
-    :config
-    (progn
-      (general-mmap "C-d" nil) ;; for lispy
-      ;; (add-hook 'lispy-mode-hook #'lispyville-mode)
-      ;; (add-hook 'emacs-lisp-mode-hook #'lispy-mode-hook)
+;; (defun dev/init-lispy ()
+;;   (use-package lispy
+;;     :defer t
+;;     :config
+;;     (progn
+;;       (general-mmap "C-d" nil) ;; for lispy
+;;       ;; (add-hook 'lispy-mode-hook #'lispyville-mode)
+;;       ;; (add-hook 'emacs-lisp-mode-hook #'lispy-mode-hook)
 
-      ;; (add-hook 'clojure-mode-hook #'lispy-mode-hook)
-      (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))))
+;;       ;; (add-hook 'clojure-mode-hook #'lispy-mode-hook)
+;;       (add-hook 'emacs-lisp-mode-hook (lambda () (lispy-mode 1))))))
 
 (defun dev/init-lispyville ()
   (use-package lispyville
@@ -170,6 +175,7 @@
       (add-hook 'clojure-mode-hook #'lispyville-mode)
       (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
       (add-hook 'lispy-mode-hook #'lispyville-mode)
+      (add-hook 'racket-mode #'lispyville-mode)
       )))
 
 
@@ -178,7 +184,7 @@
   (evilem-define (kbd "ghf") #'evil-repeat-find-char
                  :name 'evilem--motion-evil-find-char-forward-line
                  :scope 'line
-                :pre-hook (save-excursion
+                 :pre-hook (save-excursion
                              ;; (setq evil-this-type 'inclusive)
                              (setq evil-this-type 'exclusive)
                              (call-interactively #'evil-find-char)))
@@ -198,9 +204,6 @@
   (define-key evil-motion-state-map "F" 'evilem--motion-evil-find-char-backward-line)
   )
 
-(defun dev/init-general ()
-  (use-package general
-    :defer t))
 
 (defun dev/init-keyfreq ()
   (setq keyfreq-excluded-commands
@@ -232,13 +235,13 @@
       (autoload 'processing-mode "processing-mode" "Processing mode" t)
       (add-to-list 'auto-mode-alist '("\\.pde$" . processing-mode)))))
 
-(defun dev/init-skeletor ()
-  (setq-default skeletor-project-directory "~/src/js"
-                skeletor-user-directory "~/.spacemacs.d/skeleton-projects")
-  (skeletor-define-template "p5js"
-    :no-license? t
-    :no-git? t)
-  )
+;; (defun dev/init-skeletor ()
+;;   (setq-default skeletor-project-directory "~/src/js"
+;;                 skeletor-user-directory "~/.spacemacs.d/skeleton-projects")
+;;   (skeletor-define-template "p5js"
+;;                             :no-license? t
+;;                             :no-git? t)
+;;   )
 
 (defun dev/post-init-helm ()
   (spacemacs|use-package-add-hook helm

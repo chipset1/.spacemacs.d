@@ -84,12 +84,10 @@
          (interactive)
          (switch-to-buffer "*Messages*"))
   "gc" 'magit-checkout
-  "bk" 'kill-this-buffer
   "bo" (lambda ()
          (interactive)
          (find-file "~/src/notes/organiser.org"))
   "at" 'org-capture
-
   ;; "ov" (lambda ()
   ;;        (interactive)
   ;;        (let ((start-point (point)))
@@ -115,6 +113,8 @@
   "op" 'dev/helm-processing-find-sketch
   "oe" 'dev/open-in-explorer
   "ob" 'frog-jump-buffer
+  "oc" 'dev/goto-clojure-docs
+  "oj" 'dev/org-insert-journal-heading
 
   ;; "ou" 'comment-map
   ;; "of" 'comment-defn
@@ -123,8 +123,8 @@
   ;; "oe" 'cider-pprint-eval-defun-at-point
   )
 
-(spacemacs/set-leader-keys-for-major-mode 'clojure-mode
-  "ep" 'cider-pprint-eval-defun-at-point)
+;; (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
+;;   "ep" 'cider-pprint-eval-defun-at-point
 
 ;; (spacemacs/set-leader-keys-for-major-mode 'clojurescript-mode
 ;;   "ec" (lambda ()
