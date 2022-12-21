@@ -71,9 +71,10 @@
   )
 
 (defun dev/org-insert-journal-heading ()
+  ;; http://ergoemacs.org/emacs/elisp_datetime.html
   (interactive)
   (evil-org-org-insert-heading-respect-content-below)
-  (insert (format "%s %sth"
+  (insert (format "%s %sth\n\t"
                   (format-time-string "%A")
                   (format-time-string "%d")))
   )
@@ -81,3 +82,27 @@
 (defun dev/goto-clojure-docs ()
   (interactive)
   (dev-goto-path-at "https://clojuredocs.org/clojure.core/%s"))
+
+(defun dev/clip-file ()
+  "Put the current file name on the clipboard"
+  ;; https://stackoverflow.com/questions/18812938/copy-full-file-path-into-copy-paste-clipboard
+  (interactive)
+  (let ((filename (if (equal major-mode 'dired-mode)
+                      (file-name-directory default-directory)
+                    (buffer-file-name))))
+    (when filename
+      (x-select-text filename))))
+
+;;ffmpeg -framerate 60 -i  ./output/day1/%04d.tif -pix_fmt yuv420p mp4s/day1_10000.mp4
+(defun dev/ffmpeg-quil-sketch (num)
+  "i didn't use this. see if I can make a general one for all processing sketches"
+  (interactive "sday number: ")
+  (let ((default-directory "~/src/clojure/genuary2022/quil"))
+    (shell-command (concat "ffmpeg -y -framerate 60 -i  ./output/day"
+                           num
+                           "/%04d.tif -pix_fmt yuv420p mp4s/day"
+                           num ".mp4"
+                           ;; "  && vlc mp4s/day" num ".mp4"
+                           ))
+    (dev/open-in-explorer)
+    ))

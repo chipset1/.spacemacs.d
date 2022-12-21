@@ -33,39 +33,47 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(php
-     vue
-     (auto-completion :variables
-                      auto-completion-return-key-behavior 'complete
-                      auto-completion-tab-key-behavior 'complete
-                      auto-completion-enable-snippets-in-popup t)
-     org
-     ;;  (c-c++ :variables
-     ;;         c-c++-default-mode-for-headers 'c-mode)
-     (shell :variables shell-default-shell 'eshell)
-     emacs-lisp
-     (elfeed :variables
-             elfeed-feeds '(("https://gridbugs.org/feed.xml" gamedev)
-                            ("http://gigasquidsoftware.com/atom.xml" clojure)
-                            ("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
-                            ("http://feeds.cognitect.com/blog/feed.rss" clojure)
-                            ("https://blog.sakugabooru.com/feed/" sakugabooru)))
-     ;; python
-     javascript
-     ;; lua
-     racket
-     csharp
-     (clojure :variables
-              clojure-enable-fancify-symbols nil)
-     ;; markdown
-     html
-     (git :variables
-          git-magit-status-fullscreen t)
-     ibuffer
-     (ranger :variables
-             ranger-preview-file t)
-     dev
-     )
+   '
+   ((auto-completion :variables
+                     auto-completion-return-key-behavior 'complete
+                     auto-completion-tab-key-behavior 'complete
+                     auto-completion-enable-snippets-in-popup t)
+    org
+    ;;  (c-c++ :variables
+    ;;         c-c++-default-mode-for-headers 'c-mode)
+    (shell :variables shell-default-shell 'eshell)
+    emacs-lisp
+    (elfeed :variables
+            rmh-elfeed-org-files nil
+            elfeed-feeds '(("https://gridbugs.org/feed.xml" gamedev)
+                           ("http://gigasquidsoftware.com/atom.xml" clojure)
+                           ("https://pkolaczk.github.io/feed.xml" code)
+                           ("http://feeds.cognitect.com/cognicast/feed.rss" clojure)
+                           ("http://feeds.cognitect.com/blog/feed.rss" clojure)
+                           ("https://andreyorst.gitlab.io/feed.xml" clojure)
+                           
+                           ("https://blog.sakugabooru.com/feed/" sakugabooru)))
+    ;; python
+    javascript
+    ;; lua
+    racket
+    ;;php
+    ;; csharp
+    ;; lsp
+    ;; vue
+    (clojure :variables
+             clojure-enable-fancify-symbols nil)
+    ;; markdown
+    html
+    (git :variables
+         git-magit-status-fullscreen t)
+    ibuffer
+    (ranger :variables
+            ranger-preview-file t)
+    dev
+    gpu
+    (spell-checking :variables enable-flyspell-auto-completion t)
+    )
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -80,6 +88,8 @@ This function should only modify configuration layer settings."
                                       gnu-elpa-keyring-update
                                       sublime-themes
                                       frog-jump-buffer
+                                      org-wc
+                                      gdscript-mode
                                       )
 
    ;; A list of packages that cannot be updated.
@@ -526,6 +536,7 @@ See the header of this file for more information."
   (set-fringe-mode 0)
   (set-face-foreground 'vertical-border "gray")
   (add-hook 'with-editor-mode-hook 'evil-insert-state)
+  (add-hook 'dired-mode-hook 'dired-omit-mode)
   ;; (add-to-list 'projectile-project-root-files ".pde") ;; TODO: figure out if this works
   (defalias 'ag 'ag.exe)
 
@@ -605,7 +616,10 @@ See the header of this file for more information."
                 neo-theme 'nerd
 
                 yas-snippet-dirs '("~/.spacemacs.d/snippets")
-                dired-listing-switches "-al --si --time-style long-iso -t"
+                ;; dired-listing-switches "-al --si --time-style long-iso -t"
+                dired-listing-switches "-alt"
+                ispell-program-name "aspell"
+
                 delete-by-moving-to-trash t))
 
 (defun dotspacemacs/user-load ()
@@ -613,6 +627,8 @@ See the header of this file for more information."
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
 dump."
+
+  (require 'gdscript-mode)
   )
 
 (defun dotspacemacs/user-config ()
@@ -621,6 +637,8 @@ dump."
   (golden-ratio-mode t)
   ;; (global-company-mode)
   (helm-autoresize-mode t)
+
+  (evil-define-key 'insert 'evil-org-mode (kbd "TAB") 'tab-to-tab-stop) 
 
   (set-frame-font "Source Code Pro")
   ;; (set-face-attribute 'default nil :height 130)
@@ -647,6 +665,9 @@ dump."
   (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   ;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
   ;; (remove-hook 'before-save-hook 'delete-trailing-whitespace t)
+  ;; (add-hook 'writeroom-mode-hook (lambda ()
+  ;;                                  ))
+
   (add-hook 'js2-mode-hook (lambda ()
                              (interactive)
                              (add-hook 'evil-insert-state-exit-hook
@@ -659,19 +680,22 @@ dump."
   ;; (advice-add 'previous-buffer :after #'dev/switch-to-buffer-continue)
   ;; (advice-add 'next-buffer :after #'dev/switch-to-buffer-continue)
   ;; (advice-add 'last-buffer :after #'dev/switch-to-buffer-continue)
-  (advice-add #'evil-jump-backward :after #'scroll-to-center-advice)
-  (advice-add #'evil-ex-search-previous :after #'scroll-to-center-advice)
-  (advice-add #'evil-ex-search-next :after #'scroll-to-center-advice)
-  (advice-add #'spacemacs/jump-to-definition :after #'scroll-to-center-advice)
-  (advice-add #'goto-last-change :after #'scroll-to-center-advice)
-  (advice-add #'evil-goto-mark-line :after #'scroll-to-center-advice)
+
+  ;; (advice-add #'evil-jump-backward :after #'scroll-to-center-advice)
+  ;; (advice-add #'evil-ex-search-previous :after #'scroll-to-center-advice)
+  ;; (advice-add #'evil-ex-search-next :after #'scroll-to-center-advice)
+  ;; (advice-add #'spacemacs/jump-to-definition :after #'scroll-to-center-advice)
+  ;; (advice-add #'goto-last-change :after #'scroll-to-center-advice)
+  ;; (advice-add #'evil-goto-mark-line :after #'scroll-to-center-advice)
+
   ;; (advice-add #'evil-replace :after #'save-buffer-advice)
   (evil-add-command-properties #'jump-to-definition :jump t)
   (evil-add-command-properties #'goto-last-change :jump t)
 
-  (evilified-state-evilify skewer-error-mode skewer-error-mode-map
+  ;; this doesn't work any more
+  ;; (evilified-state-evilify skewer-error-mode skewer-error-mode-map
 
-    (kbd "q") 'quit-window)
+  ;;   (kbd "q") 'quit-window)
 
   ;; (spaceline-compile)
   ;; (spacemacs/load-theme 'base16-ocean)
@@ -692,11 +716,12 @@ This function is called at the very end of Spacemacs initialization."
    '(ansi-color-names-vector
      ["#101010" "#7c7c7c" "#8e8e8e" "#a0a0a0" "#686868" "#747474" "#686868" "#b9b9b9"])
    '(custom-safe-themes
-     '("78c1c89192e172436dbf892bd90562bc89e2cc3811b5f9506226e735a953a9c6" "12670281275ea7c1b42d0a548a584e23b9c4e1d2dabb747fd5e2d692bcd0d39b" "4a91a64af7ff1182ed04f7453bb5a4b0c3d82148d27db699df89a5f1d449e2a4" "16dd114a84d0aeccc5ad6fd64752a11ea2e841e3853234f19dc02a7b91f5d661" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" default))
+     '("4bc81db882f65e7fad8fdadb6ce3bbc4447667258174347ab4a0e88768af661b" "deea4f8ef106dd1d8746a6fdccf42cf504982605bd53024b0f56c4d3e4a108e4" "434c19477cfebbf4582c5aa8d9eb95b1b01207ccb8bd8b562d02ca77e7da31d5" "e1a3810bf01e659da4ee5b46bcd2450a42bc7bcf1d701add0a6e96665c3a2e2f" "4f5210a77c5a568681f7f14a969fcffbbb0b88069c2e9a06e8ba9a85556ac587" "e9776d12e4ccb722a2a732c6e80423331bcb93f02e089ba2a4b02e85de1cf00e" "58c6711a3b568437bab07a30385d34aacf64156cc5137ea20e799984f4227265" "3d5ef3d7ed58c9ad321f05360ad8a6b24585b9c49abcee67bdcbb0fe583a6950" "9b59e147dbbde5e638ea1cde5ec0a358d5f269d27bd2b893a0947c4a867e14c1" "78c1c89192e172436dbf892bd90562bc89e2cc3811b5f9506226e735a953a9c6" "12670281275ea7c1b42d0a548a584e23b9c4e1d2dabb747fd5e2d692bcd0d39b" "4a91a64af7ff1182ed04f7453bb5a4b0c3d82148d27db699df89a5f1d449e2a4" "16dd114a84d0aeccc5ad6fd64752a11ea2e841e3853234f19dc02a7b91f5d661" "72a81c54c97b9e5efcc3ea214382615649ebb539cb4f2fe3a46cd12af72c7607" default))
    '(evil-want-Y-yank-to-eol nil)
+   '(helm-completion-style 'helm)
    '(linum-format " %7i ")
    '(package-selected-packages
-     '(tern sublime-themes phpunit php-extras geben drupal-mode company-phpactor phpactor composer php-runtime company-php ac-php-core xcscope php-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data yasnippet-snippets xterm-color xref-js2 ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here symon symbol-overlay string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-mode rainbow-delimiters racket-mode processing-mode prettier-js pcre2el password-generator paradox overseer orgit org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file omnisharp npm-mode nodejs-repl nameless multi-term move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum livid-mode lispyville link-hint keyfreq key-chord json-navigator json-mode js-doc indium indent-guide ibuffer-projectile hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio-scroll-screen golden-ratio gnuplot gnu-elpa-keyring-update gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link general fuzzy frog-jump-buffer font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elfeed-org elfeed-goodies editorconfig dumb-jump dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode base16-theme auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
+     '(flyspell-popup auto-dictionary flyspell-correct-helm flyspell-correct tmr gdscript-mode org-wc opencl-mode glsl-mode cuda-mode org-contrib org tern sublime-themes phpunit php-extras geben drupal-mode company-phpactor phpactor composer php-runtime company-php ac-php-core xcscope php-mode web-mode tagedit slim-mode scss-mode sass-mode pug-mode impatient-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data yasnippet-snippets xterm-color xref-js2 ws-butler writeroom-mode winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-magit treemacs-icons-dired treemacs-evil toc-org terminal-here symon symbol-overlay string-inflection spaceline-all-the-icons smeargle shell-pop restart-emacs ranger rainbow-mode rainbow-delimiters racket-mode processing-mode prettier-js pcre2el password-generator paradox overseer orgit org-superstar org-rich-yank org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file omnisharp npm-mode nodejs-repl nameless multi-term move-text magit-svn magit-section magit-gitflow macrostep lorem-ipsum livid-mode lispyville link-hint keyfreq key-chord json-navigator json-mode js-doc indium indent-guide ibuffer-projectile hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-gitignore helm-git-grep helm-flx helm-descbinds helm-company helm-cider helm-c-yasnippet helm-ag google-translate golden-ratio-scroll-screen golden-ratio gnuplot gnu-elpa-keyring-update gitignore-templates gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link general fuzzy frog-jump-buffer font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eshell-z eshell-prompt-extras esh-help emr elisp-slime-nav elfeed-org elfeed-goodies editorconfig dumb-jump dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clojure-snippets clean-aindent-mode cider-eval-sexp-fu centered-cursor-mode base16-theme auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line ac-ispell)))
   (custom-set-faces
    ;; custom-set-faces was added by Custom.
    ;; If you edit it by hand, you could mess it up, so be careful.

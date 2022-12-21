@@ -17,27 +17,29 @@
   "gl" 'evil-avy-goto-line
   "gj" 'spacemacs/helm-jump-in-buffer
   "gf" 'helm-find-files
+  ;; "gb" 'frog-jump-buffer
   ;; "C-f" 'anzu-query-replace
   ";" 'save-buffer
   "C-=" 'evil-numbers/inc-at-pt
   "C--" 'evil-numbers/dec-at-pnt
   "C-l" 'dev/change-in-arg
   "C-;" 'evilnc-comment-or-uncomment-lines
-  "U" 'undo-tree-redo
-  "(" 'sp-backward-up-sexp)
+  "U" 'undo-tree-redo)
 
 (general-omap "ip" 'evil-inner-paren    ;; was evil-paste?
-              "ap" 'evil-a-paren        ;; evil paragraph
-              "ik" 'evil-inner-curly
-              "ak" 'evil-a-curly)
+  "ap" 'evil-a-paren        ;; evil paragraph
+  "ik" 'evil-inner-curly
+  "ak" 'evil-a-curly)
 
-(general-define-key :states '(normal insert)
-                    :keymaps 'lispy-mode-map
-                    "D" 'lispy-kill)
+;; (general-define-key :states '(normal insert)
+;;                     :keymaps 'lispy-mode-map
+;;                     "D" 'lispy-kill)
 
-(general-define-key :states '(normal)
-                    :keymaps 'lispy-mode-map
-                    "Y" (general-simulate-key "ya("))
+;; (evil-define-key 'insert 'evil-org-mode (kbd "TAB") 'tab-to-tab-stop)
+
+;; (general-define-key :states '(normal)
+;;                     :keymaps 'lispy-mode-map
+;;                     "Y" (general-simulate-key "ya("))
 
 (general-define-key :states '(normal insert)
                     "M-)" 'evil-lisp-state-sp-forward-slurp-sexp
@@ -74,9 +76,9 @@
   "op" 'org-timer-pause-or-continue)
 
 (spacemacs/set-leader-keys
-  "1" 'quick-shift-1
-  "2" 'quick-shift-2
-  "3" 'quick-shift-3
+  ;; "1" 'quick-shift-1
+  ;; "2" 'quick-shift-2
+  ;; "3" 'quick-shift-3
   "5" 'query-replace
   "z-" 'spacemacs/decrease-transparency
   "z=" 'spacemacs/increase-transparency
@@ -84,10 +86,10 @@
          (interactive)
          (switch-to-buffer "*Messages*"))
   "gc" 'magit-checkout
-  "bo" (lambda ()
-         (interactive)
-         (find-file "~/src/notes/organiser.org"))
-  "at" 'org-capture
+  ;; "bo" (lambda ()
+  ;;        (interactive)
+  ;;        (find-file "~/src/notes/organiser.org"))
+  ;; "at" 'org-capture
   ;; "ov" (lambda ()
   ;;        (interactive)
   ;;        (let ((start-point (point)))
@@ -95,8 +97,9 @@
   ;;          (forward-char)
   ;;          (sp-up-sexp)
   ;;          (evil-visual-select start-point (+ 1 (point)))))
-  "os" 'dev/to-unix-file
-  "ot" 'online-thesaurus-query
+  ;; "os" 'dev/to-unix-file
+  ;; "os" 'dev/ffmpeg-quil-sketch
+  ;; "ot" 'online-thesaurus-query
   "or" (lambda () "test"
          (interactive)
          (cond ((eq 'processing-mode major-mode)
@@ -109,8 +112,8 @@
                   (compile "make")))))
   "of" 'dev/goto-p5reference
   "od" 'dev/goto-processing-reference
-  "oo" 'clojure-comment-uncomment
-  "op" 'dev/helm-processing-find-sketch
+  ;; "oo" 'clojure-comment-uncomment
+  ;; "op" 'dev/helm-processing-find-sketch
   "oe" 'dev/open-in-explorer
   "ob" 'frog-jump-buffer
   "oc" 'dev/goto-clojure-docs
@@ -125,6 +128,11 @@
 
 ;; (spacemacs/set-leader-keys-for-major-mode 'clojure-mode
 ;;   "ep" 'cider-pprint-eval-defun-at-point
+
+(spacemacs/set-leader-keys-for-major-mode 'org-mode
+  "wc" 'org-wc-display
+  "wr" 'org-wc-remove-overlays
+  )
 
 ;; (spacemacs/set-leader-keys-for-major-mode 'clojurescript-mode
 ;;   "ec" (lambda ()

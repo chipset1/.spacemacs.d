@@ -35,19 +35,54 @@
         ;; anzu
         keyfreq
         general
-        key-chord
+        ;; key-chord
         golden-ratio-scroll-screen
         ;; skeletor
         processing-mode
-        indium
+        ;; indium
         xref-js2
         ;; glsl-mode
+        tmr
         ))
 
 (defun dev/init-general ()
   (use-package general
     :defer t))
 
+(defun dev/timer-finished (timer)
+  "this is a work in progress"
+  (let ((file "c:/Users/Stephen/src/notes/main/habbit-track.org")
+        (start (tmr--format-creation-date timer))
+        (end (tmr--format-end-date timer))
+        (description (tmr--timer-description timer)))
+    (write-region (format "description: %s, date: %s, start: %s, end: %s\n"
+                          description
+                          (format-time-string "%Y-%m-%e")
+                          start end)
+                  nil
+                  file
+                  t)))
+
+(defun dev/init-tmr ()
+  (use-package tmr
+    :defer t
+    :config (progn (setq tmr-notification-urgency 'normal)
+                   (setq tmr-descriptions-list 'tmr-description-history)
+                   (setq tmr-sound-file "C:/Windows/Media/Alarm09.wav")
+                   (let ((map global-map))
+                     (define-key map (kbd "C-c t t") #'tmr)
+                     (define-key map (kbd "C-c t T") #'tmr-with-description)
+                     (define-key map (kbd "C-c t l") #'tmr-tabulated-view) ; "list timers" mnemonic
+                     (define-key map (kbd "C-c t c") #'tmr-clone)
+                     (define-key map (kbd "C-c t k") #'tmr-cancel)
+                     (define-key map (kbd "C-c t s") #'tmr-reschedule)
+                     (define-key map (kbd "C-c t e") #'tmr-edit-description)
+                     (define-key map (kbd "C-c t r") #'tmr-remove)
+                     (define-key map (kbd "C-c t R") #'tmr-remove-finished))
+                   (add-hook 'tmr-timer-finished-functions 'dev/timer-finished)
+
+                   )
+    ))
 
 ;; (defun dev/init-glsl-mode ()
 ;;   (use-package glsl-mode
@@ -97,14 +132,14 @@
       ))
   )
 
-(defun dev/init-key-chord ()
-  (use-package key-chord :ensure t
-    :defer t
-    :config
-    (setq key-chord-two-keys-delay 0.2)
-    ;; (use-package key-seq :ensure t)
-    )
-  )
+;; (defun dev/init-key-chord ()
+;;   (use-package key-chord :ensure t
+;;     :defer t
+;;     :config
+;;     (setq key-chord-two-keys-delay 0.2)
+;;     ;; (use-package key-seq :ensure t)
+;;     )
+;;   )
 
 ;; (defun dev/init-spaceline-all-the-icons ()
 ;;   (use-package spaceline-all-the-icons
@@ -150,9 +185,9 @@
 ;;     :config (global-anzu-mode +1))
 ;;   )
 
-(defun dev/init-indium ()
-  (use-package indium
-    :defer t))
+;; (defun dev/init-indium ()
+;;   (use-package indium
+;;     :defer t))
 
 ;; (defun dev/init-lispy ()
 ;;   (use-package lispy
@@ -179,7 +214,7 @@
       )))
 
 
-(defun dev/init-evil-easymotion ()
+(defun dev/post-init-evil-easymotion ()
   (evilem-default-keybindings "gh")
   (evilem-define (kbd "ghf") #'evil-repeat-find-char
                  :name 'evilem--motion-evil-find-char-forward-line

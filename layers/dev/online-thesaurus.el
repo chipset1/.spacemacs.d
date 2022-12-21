@@ -2,6 +2,7 @@
 (require 'thingatpt)
 
 ;; to do add test add antonyms
+;; this whole thing doesn't work
 
 (defmacro comment (&rest body)
   "Comment out one or more s-expressions."
@@ -51,7 +52,7 @@
   (interactive)
   ;; (message "%s" synonym-lookup)
   (setq synonym-lookup (thing-at-point 'word))
-  (url-retrieve (format "http://www.thesaurus.com/browse/%s" synonym-lookup)
+  (url-retrieve (format "https://www.thesaurus.com/browse/%s" synonym-lookup)
                 (lambda (status)
                   (let (dom-data heading-pairs)
 
