@@ -1,6 +1,6 @@
 # spacemacs config
 
-update 2025: I have move to a custom config and don't use spacemacs anymore.
+update 2025: I have moved to a custom config and don't use spacemacs anymore.
 
 this is a work in progress. ignore layers/dev/quick-shift.el and layers/dev/online-thesaurus.el
 
